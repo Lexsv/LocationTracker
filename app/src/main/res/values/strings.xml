@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Location</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="authentication_email">Email</string>
+    <string name="authentication_welcome1">Добро пожаловать в</string>
+    <string name="authentication_welcome2">My Locaytion</string>
+    <string name="authentication_password">Password</string>
+    <string name="enable_title">Title Labal</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="register_email">Email</string>
+    <string name="register_user_name">User Name</string>
+    <string name="register_password">Password</string>
+    <string name="register_repeat_password">Repeat Password</string>
+    <string name="text_reg">Регистрация акаунта</string>
+    <string name="register_reg">Botton Registr</string>
+    <string name="register_log">Botton Login</string>
+    <string name="empty_list">Нет записей.   Нажмите \"+ \"</string>
 </resources>

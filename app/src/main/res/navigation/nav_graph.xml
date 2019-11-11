@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="ua.com.location.fragment.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/register" />
+        <action
+            android:id="@+id/action_login_to_listAndTrack"
+            app:destination="@id/listAndTrack" />
+    </fragment>
+    <fragment
+        android:id="@+id/register"
+        android:name="ua.com.location.fragment.Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/listAndTrack"
+        android:name="ua.com.location.fragment.ListAndTrack"
+        android:label="fragment_list_and_track"
+        tools:layout="@layout/fragment_list_and_track" >
+        <action
+            android:id="@+id/action_listAndTrack_to_map"
+            app:destination="@id/map" />
+    </fragment>
+    <fragment
+        android:id="@+id/map"
+        android:name="ua.com.location.fragment.Map"
+        android:label="Map" />
+</navigation>

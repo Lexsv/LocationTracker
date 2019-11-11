@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".fragment.Login">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/map_background"
+        android:paddingLeft="@dimen/margin_size_25"
+        android:paddingRight="@dimen/margin_size_25">
+
+        <TextView
+            android:id="@+id/welcome_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_35"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/authentication_welcome1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/margin_size_60"
+            app:layout_constraintBottom_toTopOf="@+id/wr_et_email"
+            />
+
+        <TextView
+            android:id="@+id/welcome_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_35"
+            android:textAlignment="center"
+            android:text="@string/authentication_welcome2"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_text1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+           android:layout_marginTop="@dimen/margin_size_10"
+
+            />
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wr_et_email"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_size_60"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_text2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/bg_ev_input_text">
+
+            <EditText
+                android:id="@+id/authentication_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:paddingLeft="@dimen/margin_size_10"
+                android:layout_marginStart="@dimen/margin_size_20"
+                android:paddingRight="@dimen/margin_size_20"
+                android:drawableLeft="@drawable/ic_email"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:hint="@string/authentication_email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wr_et_password"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/wr_et_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_size_20"
+            android:background="@drawable/bg_ev_input_text">
+
+            <EditText
+                android:id="@+id/authentication_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="@dimen/margin_size_10"
+                android:layout_marginStart="@dimen/margin_size_20"
+                android:paddingRight="@dimen/margin_size_20"
+                android:layout_marginEnd="@dimen/margin_size_20"
+                android:drawablePadding="@dimen/margin_size_10"
+                android:drawableLeft="@drawable/ic_lock_outline"
+                android:hint="@string/authentication_password"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/authentication_bt_entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_butt"
+            android:layout_marginTop="@dimen/margin_size_60"
+            android:src="@drawable/ic_home_black_24dp"
+            app:layout_constraintEnd_toStartOf="@+id/authentication_bt_reg"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/register_log"
+            app:layout_constraintTop_toBottomOf="@+id/wr_et_password" />
+
+        <ImageButton
+            android:id="@+id/authentication_bt_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_60"
+            android:contentDescription="@string/register_reg"
+            android:background="@drawable/bg_butt"
+            app:layout_constraintStart_toEndOf="@+id/authentication_bt_entry"
+            app:layout_constraintTop_toBottomOf="@+id/wr_et_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_playlist_add_black_24dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

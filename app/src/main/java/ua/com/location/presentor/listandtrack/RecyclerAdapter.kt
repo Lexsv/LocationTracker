@@ -1,4 +1,4 @@
-package ua.com.location.fragment
+package ua.com.location.presentor.listandtrack
 
 import android.view.LayoutInflater
 import android.view.View

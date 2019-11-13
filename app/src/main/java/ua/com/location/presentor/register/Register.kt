@@ -1,4 +1,4 @@
-package ua.com.location.fragment
+package ua.com.location.presentor.register
 
 
 import android.os.Bundle
@@ -10,18 +10,17 @@ import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_register.*
 import ua.com.location.R
+import ua.com.location.data.room.AppDatabase
 import ua.com.location.di.component.DaggerRegisterComponent
 
-import ua.com.location.di.modul.LoginPresentModul
 import ua.com.location.di.modul.RegisterPresentModul
-import ua.com.location.fragment.interfas.FragmentView
-import ua.com.location.fragment.interfas.RegisterInterfas
-import ua.com.location.presentor.interfas.RegisterPresentInterfas
+import ua.com.location.presentor.login.LoginView
 import javax.inject.Inject
 
 
-class Register : Fragment(), FragmentView {
+class Register : Fragment(), LoginView {
     val TAGMAP = "MAP"
+
     @Inject
     lateinit var registerPresentInterfas: RegisterPresentInterfas
 
@@ -29,15 +28,17 @@ class Register : Fragment(), FragmentView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        DaggerRegisterComponent.builder().registerPresentModul(RegisterPresentModul(this))
-            .build()
-            .inject(this)
+        addDaggerDepand()
+        addButnListenar()
+
+    }
+
+    fun  addButnListenar(){
         register_bt_reg.setOnClickListener{ _ ->
             registerPresentInterfas.registNew(
                 register_user_name.text.toString(),
@@ -45,21 +46,31 @@ class Register : Fragment(), FragmentView {
                 register_password.text.toString(),
                 register_repeat_password.text.toString()
             )
-        }
 
+        }
     }
 
 
-    override fun rout(key: String) {
 
+
+    fun  addDaggerDepand(){
+        DaggerRegisterComponent.builder().registerPresentModul(RegisterPresentModul(this))
+            .build()
+            .inject(this)
+    }
+
+    override fun rout(key: String) {
             when(key) {
                TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
             }
     }
 
-    override fun errorMassege(key: String) {
+
+    override fun actionMassege(key: String) {
         Toast.makeText(context, key, Toast.LENGTH_LONG).show()
     }
+
+    override fun getAppDataBase(): AppDatabase = AppDatabase.getAppDatabase(context!!)!!
 
 
 }

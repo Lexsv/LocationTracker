@@ -16,6 +16,6 @@
      android:layout_height="wrap_content"
      android:layout_margin="@dimen/margin_size_16"
      android:src="@drawable/ic_add"
-     android:layout_gravity="bottom|end"/>
+     android:layout_gravity="bottom|center"/>
 
 </FrameLayout>

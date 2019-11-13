@@ -1,12 +1,9 @@
-package ua.com.location.fragment
+package ua.com.location.presentor.listandtrack
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-
-
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import ua.com.location.presentor.map.Map
 
 class PagerAdapt( fa: FragmentManager): FragmentStatePagerAdapter(fa,
     FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

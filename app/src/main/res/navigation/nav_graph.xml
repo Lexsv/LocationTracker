@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="ua.com.location.fragment.Login"
+        android:name="ua.com.location.presentor.login.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/register"
-        android:name="ua.com.location.fragment.Register"
+        android:name="ua.com.location.presentor.register.Register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/listAndTrack"
-        android:name="ua.com.location.fragment.ListAndTrack"
+        android:name="ua.com.location.presentor.listandtrack.ListAndTrack"
         android:label="fragment_list_and_track"
         tools:layout="@layout/fragment_list_and_track" >
         <action
@@ -33,6 +33,6 @@
     </fragment>
     <fragment
         android:id="@+id/map"
-        android:name="ua.com.location.fragment.Map"
+        android:name="ua.com.location.presentor.map.Map"
         android:label="Map" />
 </navigation>

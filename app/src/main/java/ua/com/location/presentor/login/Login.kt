@@ -1,4 +1,4 @@
-package ua.com.location.fragment
+package ua.com.location.presentor.login
 
 
 import android.os.Bundle
@@ -10,30 +10,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import androidx.navigation.fragment.NavHostFragment
+import androidx.room.Room
 
 
 import kotlinx.android.synthetic.main.fragment_login.*
 
 import ua.com.location.R
+import ua.com.location.data.room.AppDatabase
 import ua.com.location.di.component.DaggerLoginComponent
 
 import ua.com.location.di.modul.LoginPresentModul
-import ua.com.location.fragment.interfas.FragmentView
-import ua.com.location.presentor.interfas.LoginPresentInterfas
 
 import javax.inject.Inject
 
 
-class Login : Fragment(), FragmentView {
-
-
+class Login : Fragment(), LoginView {
     val TAGREG = "RAGISTER"
+
+
     val TAGCOL = "COLECTION"
     @Inject
     lateinit var loginPresentInterfas: LoginPresentInterfas
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,21 +40,28 @@ class Login : Fragment(), FragmentView {
     }
 
 
-    override fun errorMassege(key: String) {
-        Toast.makeText(context, key, Toast.LENGTH_LONG).show()
-    }
-
-
-
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        DaggerLoginComponent.builder().loginPresentModul(LoginPresentModul(this))
-            .build()
-            .inject(this)
+        addDaggerDepand()
+        addButnListener()
 
 
+    }
+
+
+   fun addDaggerDepand(){
+       DaggerLoginComponent.builder().loginPresentModul(LoginPresentModul(this))
+           .build()
+           .inject(this)
+   }
+
+
+
+
+
+
+    fun addButnListener(){
         authentication_bt_entry.setOnClickListener{_ ->
             loginPresentInterfas.login(authentication_email.text.toString(), authentication_password.text.toString())
         }
@@ -68,12 +72,18 @@ class Login : Fragment(), FragmentView {
 
     }
 
+    override fun actionMassege(key: String) {
+        Toast.makeText(context, key, Toast.LENGTH_LONG).show()
+    }
+
     override fun rout(key: String) {
         when(key) {
             TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
         }
     }
+
+    override fun getAppDataBase(): AppDatabase = Room.databaseBuilder(context!!,AppDatabase::class.java,"user").build()
 
 }
 

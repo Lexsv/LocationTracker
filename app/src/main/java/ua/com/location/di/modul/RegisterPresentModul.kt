@@ -2,12 +2,13 @@ package ua.com.location.di.modul
 
 import dagger.Module
 import dagger.Provides
-import ua.com.location.fragment.interfas.FragmentView
-import ua.com.location.presentor.RegisterPresent
-import ua.com.location.presentor.interfas.RegisterPresentInterfas
+import ua.com.location.presentor.login.LoginView
+import ua.com.location.presentor.register.RegisterPresent
+import ua.com.location.presentor.register.RegisterPresentInterfas
 
 
 @Module
-class RegisterPresentModul (val fragmentView: FragmentView) {
-    @Provides fun getRoudView(): RegisterPresentInterfas = RegisterPresent(fragmentView = fragmentView)
+class RegisterPresentModul (val loginView: LoginView) {
+    @Provides fun getRoudView(): RegisterPresentInterfas =
+        RegisterPresent(loginView = loginView)
 }

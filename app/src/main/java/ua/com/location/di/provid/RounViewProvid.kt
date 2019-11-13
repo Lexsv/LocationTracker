@@ -1,9 +1,9 @@
 package ua.com.location.di.provid
 
 import dagger.Module
-import ua.com.location.fragment.interfas.FragmentView
+import ua.com.location.presentor.login.LoginView
 
 
 @Module
-class RounViewProvid(val fragmentView: FragmentView) {
+class RounViewProvid(val loginView: LoginView) {
 }

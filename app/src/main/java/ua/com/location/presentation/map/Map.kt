@@ -1,4 +1,4 @@
-package ua.com.location.presentor.map
+package ua.com.location.presentation.map
 
 import android.content.pm.PackageManager
 
@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import ua.com.location.R
 import androidx.fragment.app.Fragment
@@ -17,12 +16,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import ua.com.location.data.ProvidContext
 import ua.com.location.data.room.AppDatabase
+import ua.com.location.presentation.dialog.MyDialog
 
 
 class Map : Fragment(), OnMapReadyCallback {
@@ -47,13 +46,7 @@ class Map : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         map_float_button.setOnClickListener {_ ->
-            onMapReady(mMap)
-//            GlobalScope.launch {
-//                val dataBase = AppDatabase.getAppDatabase(context!!)
-//                val dataBaseInterfas = dataBase?.dataBaseDou()
-//                AppDatabase.destroyInstance()
-//            }
-
+            MyDialog().show(childFragmentManager, "111")
 
         }
     }

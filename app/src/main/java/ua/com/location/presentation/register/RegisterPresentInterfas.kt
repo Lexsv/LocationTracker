@@ -1,4 +1,4 @@
-package ua.com.location.presentor.register
+package ua.com.location.presentation.register
 
 interface RegisterPresentInterfas{
     fun startSckreen( key : String)

@@ -1,4 +1,4 @@
-package ua.com.location.presentor.listandtrack
+package ua.com.location.presentation.listandtrack
 
 import ua.com.location.data.LocatoinTrak
 import ua.com.location.data.interfas.DataModulInterfas

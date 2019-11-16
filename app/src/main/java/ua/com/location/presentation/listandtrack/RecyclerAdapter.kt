@@ -1,4 +1,4 @@
-package ua.com.location.presentor.listandtrack
+package ua.com.location.presentation.listandtrack
 
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +33,6 @@ class RecyclerAdapter(var items: List<LocatoinTrak>, val callback: Callback) :
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
             }
         }
-
 
     }
 

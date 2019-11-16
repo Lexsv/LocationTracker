@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/margin_size_10"
+    android:layout_marginRight="@dimen/margin_size_10"
+    android:minWidth="300dp"
+    android:background="@drawable/map_background_2"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_size_10">
+
+    <EditText
+        android:id="@+id/dialog_fragment_title"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/margin_size_10"
+        android:layout_marginTop="@dimen/margin_size_20"
+        android:layout_marginRight="@dimen/margin_size_10"
+        android:background="@drawable/bg_racycle_view"
+        android:hint="@string/title"
+
+        android:padding="@dimen/margin_size_10"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/dialog_fragment_description"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_size_20"
+        android:background="@drawable/bg_racycle_view"
+        android:gravity="top"
+        android:hint="@string/description_plan"
+        android:lines="15"
+        android:alpha="0.8"
+
+        android:padding="@dimen/margin_size_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_fragment_title" />
+
+    <ImageButton
+        android:id="@+id/dialog_fragment_bt_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_10"
+        android:background="@drawable/bg_butt"
+        android:src="@drawable/clear_black_24dp"
+        app:layout_constraintEnd_toStartOf="@id/dialog_fragment_bt_ok"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_fragment_description"
+
+        />
+
+    <ImageButton
+        android:id="@+id/dialog_fragment_bt_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_10"
+
+        android:background="@drawable/bg_butt"
+        android:src="@drawable/check_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dialog_fragment_bt_cancel"
+        app:layout_constraintTop_toBottomOf="@id/dialog_fragment_description" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

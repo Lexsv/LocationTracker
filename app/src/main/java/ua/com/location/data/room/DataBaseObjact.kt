@@ -10,5 +10,5 @@ import ua.com.location.data.LocatoinTrak
 @TypeConverters(Converters::class)
 class DataBaseObjact(
     @PrimaryKey  @ColumnInfo(name = "id") var id: String,
-    @ColumnInfo(name = "listlocat") var listLocatoinTrak: List<LocatoinTrak>
+    @ColumnInfo(name = "listlocat") var listLocatoinTrak: List<LocatoinTrak>? = null
 )

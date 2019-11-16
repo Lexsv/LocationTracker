@@ -5,6 +5,9 @@ import androidx.room.*
 @Dao
 interface DataBaseInterfas{
 
+    @Query("SELECT * FROM user")
+    fun getAllUser(): List<DataBaseObjact>
+
     @Query("SELECT * FROM user WHERE id = :id")
     fun getById(id: String): DataBaseObjact
 
@@ -16,6 +19,9 @@ interface DataBaseInterfas{
 
     @Delete
     fun delete(dataBaseObjact: DataBaseObjact)
+
+    @Query("DELETE FROM user")
+    fun deleteAll()
 
 
 }

@@ -1,6 +1,6 @@
 package ua.com.location.util
 
-fun validEnterData(name: String, email: String,password: String, repitPassword: String):Pair<Boolean,ActionMessage>{
+fun validEnterDataRegister(name: String, email: String, password: String, repitPassword: String):Pair<Boolean,ActionMessage>{
 
    return when{
        name.isEmpty()
@@ -10,6 +10,18 @@ fun validEnterData(name: String, email: String,password: String, repitPassword: 
         password != repitPassword -> false to ActionMessage.ERROR_NO_COINCIDENCE
         password.length < 6 ->      false to ActionMessage.ERROR_LENGTH
        else -> true to ActionMessage.SUCCESSFUL
+    }
+
+}
+
+
+fun validEnterDataAut( email: String, password: String):Pair<Boolean,ActionMessage>{
+
+    return when{
+                email.isEmpty()
+                && password.isEmpty() -> false to ActionMessage.ERROR_EMPTY_DATA
+                password.length < 6 ->      false to ActionMessage.ERROR_LENGTH
+                 else -> true to ActionMessage.SUCCESSFUL
     }
 
 }

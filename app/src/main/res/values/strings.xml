@@ -17,4 +17,6 @@
     <string name="register_reg">Botton Registr</string>
     <string name="register_log">Botton Login</string>
     <string name="empty_list">Нет записей.   Нажмите \"+ \"</string>
+    <string name="title">Title</string>
+    <string name="description_plan">Description plan</string>
 </resources>

@@ -1,4 +1,4 @@
-package ua.com.location.presentor.login
+package ua.com.location.presentation.login
 
 
 import android.os.Bundle
@@ -25,19 +25,17 @@ import javax.inject.Inject
 
 
 class Login : Fragment(), LoginView {
+
+    val TAGMAP = "MAP"
     val TAGREG = "RAGISTER"
-
-
     val TAGCOL = "COLECTION"
     @Inject
     lateinit var loginPresentInterfas: LoginPresentInterfas
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
-
-    }
+    ): View? { return inflater.inflate(R.layout.fragment_login, container, false)}
 
 
 
@@ -45,8 +43,7 @@ class Login : Fragment(), LoginView {
         super.onActivityCreated(savedInstanceState)
         addDaggerDepand()
         addButnListener()
-
-
+        loginPresentInterfas.onStart()
     }
 
 
@@ -58,15 +55,12 @@ class Login : Fragment(), LoginView {
 
 
 
-
-
-
     fun addButnListener(){
         authentication_bt_entry.setOnClickListener{_ ->
-            loginPresentInterfas.login(authentication_email.text.toString(), authentication_password.text.toString())
+            loginPresentInterfas.onLogin(authentication_email.text.toString(), authentication_password.text.toString())
         }
         authentication_bt_reg.setOnClickListener { _ ->
-            loginPresentInterfas.startSckreen(TAGREG)
+            loginPresentInterfas.onStartSckreen(TAGREG)
 
         }
 
@@ -80,6 +74,8 @@ class Login : Fragment(), LoginView {
         when(key) {
             TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
+            TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
+
         }
     }
 

@@ -1,7 +1,7 @@
 package ua.com.location.data
 
 import ua.com.location.data.interfas.DataModulInterfas
-import ua.com.location.presentor.listandtrack.ListAndTrackPresentInterfas
+import ua.com.location.presentation.listandtrack.ListAndTrackPresentInterfas
 
 class DataModel constructor(var listAndTrackPresentInterfas: ListAndTrackPresentInterfas): DataModulInterfas {
 
@@ -9,9 +9,7 @@ class DataModel constructor(var listAndTrackPresentInterfas: ListAndTrackPresent
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    companion object{
 
-    }
 
 
 }

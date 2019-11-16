@@ -1,4 +1,4 @@
-package ua.com.location.presentor.register
+package ua.com.location.presentation.register
 
 
 import android.os.Bundle
@@ -14,7 +14,7 @@ import ua.com.location.data.room.AppDatabase
 import ua.com.location.di.component.DaggerRegisterComponent
 
 import ua.com.location.di.modul.RegisterPresentModul
-import ua.com.location.presentor.login.LoginView
+import ua.com.location.presentation.login.LoginView
 import javax.inject.Inject
 
 
@@ -51,10 +51,9 @@ class Register : Fragment(), LoginView {
     }
 
 
-
-
     fun  addDaggerDepand(){
-        DaggerRegisterComponent.builder().registerPresentModul(RegisterPresentModul(this))
+        DaggerRegisterComponent.builder()
+            .registerPresentModul(RegisterPresentModul(this))
             .build()
             .inject(this)
     }

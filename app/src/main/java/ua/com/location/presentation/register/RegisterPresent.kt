@@ -1,19 +1,24 @@
-package ua.com.location.presentor.register
+package ua.com.location.presentation.register
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import ua.com.location.data.room.AppDatabase
 import ua.com.location.data.room.DataBaseObjact
-import ua.com.location.presentor.login.LoginView
+import ua.com.location.models.RoomData
+import ua.com.location.models.RoomWorkInterfas
+import ua.com.location.presentation.login.LoginView
 import ua.com.location.util.ActionMessage
-import ua.com.location.util.validEnterData
+import ua.com.location.util.validEnterDataRegister
 import javax.inject.Inject
 
 class RegisterPresent @Inject constructor(val loginView: LoginView):
     RegisterPresentInterfas {
+    val roomWorkInterfas: RoomWorkInterfas
+    init {
+        roomWorkInterfas = RoomData()
+    }
 
     val TAGMAP = "MAP"
 
@@ -25,7 +30,7 @@ class RegisterPresent @Inject constructor(val loginView: LoginView):
     }
 
     override fun registNew(name: String, email: String, password: String, repitPassword: String) {
-         val resalt =    validEnterData(name = name,
+         val resalt =    validEnterDataRegister(name = name,
                                                                 email = email,
                                                                 password = password,
                                                                 repitPassword = repitPassword)
@@ -38,12 +43,7 @@ class RegisterPresent @Inject constructor(val loginView: LoginView):
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             GlobalScope.launch {
-                                val user = DataBaseObjact(mAuth.uid!!, mutableListOf())
-                                val dataBase = loginView.getAppDataBase()
-                                val dataBaseInterfas = dataBase.dataBaseDou()
-                                dataBaseInterfas.insert(user)
-                                AppDatabase.destroyInstance()
-
+                                roomWorkInterfas.insert( DataBaseObjact(mAuth.uid!!, mutableListOf()))
                             }
 
 
@@ -52,7 +52,6 @@ class RegisterPresent @Inject constructor(val loginView: LoginView):
                                 UserProfileChangeRequest.Builder().setDisplayName(name).build())
                                 .addOnCompleteListener { taskUpData ->
                                     if (taskUpData.isSuccessful) {
-
                                         loginView.actionMassege("Привет ${mAuth.currentUser!!.displayName}\nвыберите точку")}
                                 }
 

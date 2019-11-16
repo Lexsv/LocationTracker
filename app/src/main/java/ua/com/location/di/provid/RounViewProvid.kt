@@ -1,7 +1,7 @@
 package ua.com.location.di.provid
 
 import dagger.Module
-import ua.com.location.presentor.login.LoginView
+import ua.com.location.presentation.login.LoginView
 
 
 @Module

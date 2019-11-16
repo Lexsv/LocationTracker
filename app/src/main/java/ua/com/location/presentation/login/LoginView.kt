@@ -1,4 +1,4 @@
-package ua.com.location.presentor.login
+package ua.com.location.presentation.login
 
 import ua.com.location.data.room.AppDatabase
 

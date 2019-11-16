@@ -7,5 +7,6 @@ enum class ActionMessage(val result:String) {
     ERROR_NO_COINCIDENCE("Пароли не совподают"),
     SUCCESSFUL("Успех"),
     ERROR_LENGTH("Пароль должен содержать более 6 символов"),
-    ERROR_EMAIL_ALREADY_IN_USE  ("Пользователь существует")
+    ERROR_EMAIL_ALREADY_IN_USE  ("Пользователь существует"),
+    ERROR_INVALID_EMAIL ("Неправельный email")
 }

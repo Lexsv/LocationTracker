@@ -1,4 +1,4 @@
-package ua.com.location.di.modul
+package ua.com.location.di.register
 
 import dagger.Module
 import dagger.Provides

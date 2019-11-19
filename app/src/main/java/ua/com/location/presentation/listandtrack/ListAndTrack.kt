@@ -6,32 +6,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
 import ua.com.location.R
 import ua.com.location.data.LocatoinTrak
+import ua.com.location.di.listATrak.DaggerListAndTrackComponent
+import ua.com.location.di.listATrak.ListAndTrakPrasentModul
 import javax.inject.Inject
 
 class ListAndTrack : Fragment(), ListAndTrackView {
 
+
+
     @Inject
     lateinit var  listAndTrackPresentInterfas : ListAndTrackPresentInterfas
-    val items = listAndTrackPresentInterfas.getListLocation()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        addDaggerDepand()
         return inflater.inflate(R.layout.fragment_list_and_track, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        listAndTrackPresentInterfas.onStart()
         addButtnListeners()
-        addRecyclerList()
-
     }
 
 
@@ -42,10 +46,11 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         }
     }
 
-    fun addRecyclerList(){
+
+    override fun showRecyclerList(list: List<LocatoinTrak>) {
         val recyclerAdapter =
             RecyclerAdapter(
-                items = items,
+                items = list,
                 callback = object :
                     RecyclerAdapter.Callback {
                     override fun onItemClicked(item: LocatoinTrak) {
@@ -54,8 +59,15 @@ class ListAndTrack : Fragment(), ListAndTrackView {
                 })
         myRecycler.adapter = recyclerAdapter
         myRecycler.layoutManager = LinearLayoutManager(context)
-
     }
+    private fun addDaggerDepand(){
+        DaggerListAndTrackComponent.builder()
+            .listAndTrakPrasentModul(ListAndTrakPrasentModul(this))
+            .build()
+            .inject(this)
+    }
+
+    override fun getLifecycleOwner(): LifecycleOwner = this
 
 
 }

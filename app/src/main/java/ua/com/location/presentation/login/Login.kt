@@ -17,9 +17,10 @@ import kotlinx.android.synthetic.main.fragment_login.*
 
 import ua.com.location.R
 import ua.com.location.data.room.AppDatabase
-import ua.com.location.di.component.DaggerLoginComponent
+import ua.com.location.di.login.DaggerLoginComponent
 
-import ua.com.location.di.modul.LoginPresentModul
+
+import ua.com.location.di.login.LoginPresentModul
 
 import javax.inject.Inject
 
@@ -35,20 +36,22 @@ class Login : Fragment(), LoginView {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? { return inflater.inflate(R.layout.fragment_login, container, false)}
+    ): View? {
+        addDaggerDepand()
+        return inflater.inflate(R.layout.fragment_login, container, false)}
 
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        addDaggerDepand()
-        addButnListener()
         loginPresentInterfas.onStart()
+        addButnListener()
     }
 
 
    fun addDaggerDepand(){
-       DaggerLoginComponent.builder().loginPresentModul(LoginPresentModul(this))
+       DaggerLoginComponent.builder()
+           .loginPresentModul(LoginPresentModul(this ))
            .build()
            .inject(this)
    }

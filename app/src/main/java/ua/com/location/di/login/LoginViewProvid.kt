@@ -1,9 +1,9 @@
-package ua.com.location.di.provid
+package ua.com.location.di.login
 
 import dagger.Module
 import ua.com.location.presentation.login.LoginView
 
 
 @Module
-class RounViewProvid(val loginView: LoginView) {
+class LoginViewProvid(val loginView: LoginView) {
 }

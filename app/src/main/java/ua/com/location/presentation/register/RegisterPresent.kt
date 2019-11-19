@@ -6,8 +6,8 @@ import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import ua.com.location.data.room.DataBaseObjact
-import ua.com.location.models.RoomData
-import ua.com.location.models.RoomWorkInterfas
+import ua.com.location.models.roommodel.RoomData
+import ua.com.location.models.roommodel.RoomWorkInterfas
 import ua.com.location.presentation.login.LoginView
 import ua.com.location.util.ActionMessage
 import ua.com.location.util.validEnterDataRegister
@@ -42,6 +42,7 @@ class RegisterPresent @Inject constructor(val loginView: LoginView):
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+
                             GlobalScope.launch {
                                 roomWorkInterfas.insert( DataBaseObjact(mAuth.uid!!, mutableListOf()))
                             }

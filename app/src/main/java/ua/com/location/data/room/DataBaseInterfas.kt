@@ -8,6 +8,7 @@ interface DataBaseInterfas{
     @Query("SELECT * FROM user")
     fun getAllUser(): List<DataBaseObjact>
 
+
     @Query("SELECT * FROM user WHERE id = :id")
     fun getById(id: String): DataBaseObjact
 

@@ -1,18 +1,19 @@
 package ua.com.location.presentation.listandtrack
 
-import ua.com.location.data.LocatoinTrak
-import ua.com.location.data.interfas.DataModulInterfas
+import androidx.lifecycle.Observer
+import ua.com.location.data.StoreViewModel
+import javax.inject.Inject
 
-class ListAndTrackPresent constructor( var dataModulInterfas: DataModulInterfas,
-                                       var listAndTrackView: ListAndTrackView
-):
+class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrackView) :
     ListAndTrackPresentInterfas {
 
-
-
-
-    override fun getListLocation(): List<LocatoinTrak> =  dataModulInterfas.getListLocation()
-
+    override fun onStart() {
+      StoreViewModel.getListTrak().observe(listAndTrackView.getLifecycleOwner(),
+          Observer { t -> listAndTrackView.showRecyclerList(t) })
+    }
 
 
 }
+
+
+

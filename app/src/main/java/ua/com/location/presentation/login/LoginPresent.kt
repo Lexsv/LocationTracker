@@ -6,9 +6,10 @@ import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import ua.com.location.data.DataStorViewModel
-import ua.com.location.models.RoomData
-import ua.com.location.models.RoomWorkInterfas
+import ua.com.location.data.StoreViewModel
+import ua.com.location.data.room.DataBaseObjact
+import ua.com.location.models.roommodel.RoomData
+import ua.com.location.models.roommodel.RoomWorkInterfas
 import ua.com.location.util.ActionMessage
 import ua.com.location.util.validEnterDataAut
 import javax.inject.Inject
@@ -32,13 +33,16 @@ class LoginPresent @Inject constructor(var loginView: LoginView) :
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+
+
                         val resultUs = GlobalScope.async {
-                            roomWorkInterfas.getAllUser()
+                            roomWorkInterfas.insert( DataBaseObjact(mAuth.uid!!, mutableListOf()))
+                            return@async roomWorkInterfas.getAllUser()
                         }
 
                         GlobalScope.launch {
                             val mResult = resultUs.await()
-                            if ( mResult.size == 0){
+                            if ( mResult[0].listLocatoinTrak!!.isEmpty()){
                                 loginView.rout(TAGMAP)
                             }else{
                                 loginView.rout(TAGCOL)
@@ -78,9 +82,9 @@ class LoginPresent @Inject constructor(var loginView: LoginView) :
         GlobalScope.launch {
 
             val mResult = result.await()
-            if ( mResult.size != 0){
-                if (mResult.get(0).listLocatoinTrak == null) {
-                    DataStorViewModel.getListTrak()!!.postValue(result.getCompleted().get(0).listLocatoinTrak)
+            if ( !mResult.isEmpty()){
+                if (mResult[0].listLocatoinTrak != null) {
+                    StoreViewModel.getListTrak().postValue(mResult[0].listLocatoinTrak)
                     loginView.rout(TAGCOL)
                 }else {
                     loginView.rout(TAGMAP)

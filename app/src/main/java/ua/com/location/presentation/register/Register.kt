@@ -11,9 +11,10 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_register.*
 import ua.com.location.R
 import ua.com.location.data.room.AppDatabase
-import ua.com.location.di.component.DaggerRegisterComponent
+import ua.com.location.di.register.DaggerRegisterComponent
 
-import ua.com.location.di.modul.RegisterPresentModul
+
+import ua.com.location.di.register.RegisterPresentModul
 import ua.com.location.presentation.login.LoginView
 import javax.inject.Inject
 
@@ -28,12 +29,12 @@ class Register : Fragment(), LoginView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        addDaggerDepand()
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        addDaggerDepand()
         addButnListenar()
 
     }

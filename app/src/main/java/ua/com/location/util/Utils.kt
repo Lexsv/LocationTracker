@@ -1,7 +1,11 @@
 package ua.com.location.util
 
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
 
 
 fun validEnterDataRegister(
@@ -39,6 +43,26 @@ fun getConnectivityNet(context: Context):Boolean{
     val capabilities = cm.getNetworkCapabilities(networkRequest)
     return capabilities != null
 
+}
+
+
+fun checkPermissions(context: Context) {
+    if (ActivityCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED &&
+        ActivityCompat.checkSelfPermission(
+            context,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        requestPermissions(context as Activity,
+            arrayOf(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ), 123
+        )
+    }
 }
 
 

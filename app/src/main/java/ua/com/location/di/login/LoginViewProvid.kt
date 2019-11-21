@@ -5,5 +5,5 @@ import ua.com.location.presentation.login.LoginView
 
 
 @Module
-class LoginViewProvid(val loginView: LoginView) {
+class LoginViewProvid(var loginView: LoginView) {
 }

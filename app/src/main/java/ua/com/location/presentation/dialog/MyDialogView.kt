@@ -4,4 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 
 interface MyDialogView {
     fun getLifecycleOwner(): LifecycleOwner
+    fun showAddDialog()
+    fun showDascritionDialog()
 }

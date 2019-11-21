@@ -1,12 +1,13 @@
 package ua.com.location.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface DataBaseInterfas{
+interface DataBaseDAO{
 
     @Query("SELECT * FROM user")
-    fun getAllUser(): List<DataBaseObjact>
+    fun getAllUser(): LiveData<List<DataBaseObjact>>
 
 
     @Query("SELECT * FROM user WHERE id = :id")

@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng
 
 
 import kotlinx.android.synthetic.main.fragment_map.*
+import ua.com.location.MainActivity
 import ua.com.location.R
 
 import ua.com.location.di.map.DaggerMapComponent
@@ -46,6 +47,7 @@ class Map : Fragment(), OnMapReadyCallback, MapView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MainActivity.MAINTAG = "MAP"
         val rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
@@ -62,7 +64,6 @@ class Map : Fragment(), OnMapReadyCallback, MapView {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap!!
-        checkPermission()
         goToMyLocation()
 
     }
@@ -81,24 +82,7 @@ class Map : Fragment(), OnMapReadyCallback, MapView {
             }
     }
 
-    private fun checkPermission() {
-        if (ActivityCompat.checkSelfPermission(
-                context!!,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                context!!,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(
-                arrayOf(
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-                ), 123
-            )
-        }
-    }
+
 
 
     private fun addDaggerDepand() {

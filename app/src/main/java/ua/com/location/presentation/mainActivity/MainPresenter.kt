@@ -2,34 +2,30 @@ package ua.com.location.presentation.mainActivity
 
 
 import android.content.Context
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ua.com.location.data.StoreViewModel
-import ua.com.location.data.room.DataBaseObjact
 import ua.com.location.util.ProvidContext
 import ua.com.location.util.checkPermissions
 
-import ua.com.location.util.getConnectivityNet
+import ua.com.location.util.isNet
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(var mainView: MainView): MainPresenterInterfas{
 
     override fun onStart(context: Context) {
         checkPermissions(context)
+        mainView.getVM().onStartApp()
         onInternetConnection()
     }
 
     override fun onSaveData() {
+        mainView.getVM().saveToFire()
+    }
 
-            val mVM = mainView.getVM()
-            mVM.deleteAll()
-            mVM.insert(DataBaseObjact(StoreViewModel.getUserid().value!!,StoreViewModel.getListTrak().value!!))
-
+    override fun onDestroy() {
 
     }
 
     fun onInternetConnection (){
-        if (!getConnectivityNet(ProvidContext.getContext())) {
+        if (!isNet(ProvidContext.getContext())) {
             mainView.actionMassege("Интернета нет")}
     }
 }

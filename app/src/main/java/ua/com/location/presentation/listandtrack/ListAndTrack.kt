@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
 import ua.com.location.MainActivity
 import ua.com.location.R
-import ua.com.location.data.LocatoinTrak
 import ua.com.location.di.listATrak.DaggerListAndTrackComponent
 import ua.com.location.di.listATrak.ListAndTrakPrasentModul
-import ua.com.location.models.PostViewModel
+import ua.com.location.models.DistributorDataVM
+import ua.com.location.models.IDistributorData
+import ua.com.location.models.repository.room.contant.Content
 import ua.com.location.presentation.dialog.MyDialog
 import javax.inject.Inject
 
@@ -38,7 +39,6 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         MainActivity.MAINTAG = "COLECTION"
         addDaggerDepand()
         return inflater.inflate(R.layout.fragment_list_and_track, container, false)
@@ -63,13 +63,13 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     }
 
 
-    override fun showRecyclerList(list: List<LocatoinTrak>) {
+    override fun showRecyclerList(list: List<Content>) {
         val recyclerAdapter =
             RecyclerAdapter(
                 items = list,
                 callback = object :
                     RecyclerAdapter.Callback {
-                    override fun onItemClicked(item: LocatoinTrak) {
+                    override fun onItemClicked(item: Content) {
                         showDialig(item)
                     }
                 })
@@ -86,8 +86,8 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     override fun getLifecycleOwner(): LifecycleOwner = this
 
 
-    override fun showDialig(item: LocatoinTrak) {
-        MyDialog(item.locatoin).setItem(item).show(childFragmentManager,"VIEWITEM")
+    override fun showDialig(item: Content) {
+        MyDialog(item.latitude to item.longitude).setItem(item).show(childFragmentManager,"VIEWITEM")
     }
 
     override fun gotoFragment(key: String) {
@@ -100,8 +100,15 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         }
     }
 
-    override fun getVM()=
-        ViewModelProviders.of(this).get(PostViewModel::class.java)
+    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
 
+    override fun rout(key: String) {
+        when(key) {
+            TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
+            TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
+            TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
+
+        }
+    }
 
 }

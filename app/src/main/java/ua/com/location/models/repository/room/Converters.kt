@@ -1,4 +1,4 @@
-package ua.com.location.data.room
+package ua.com.location.models.repository.room
 
 import androidx.room.TypeConverter
 import com.google.firebase.auth.FirebaseUser

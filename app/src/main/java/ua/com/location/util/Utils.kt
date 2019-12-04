@@ -37,7 +37,7 @@ fun validEnterDataAut(email: String, password: String): Pair<Boolean, ActionMess
 
 }
 
-fun getConnectivityNet(context: Context):Boolean{
+fun isNet(context: Context):Boolean{
     val cm  = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val networkRequest = cm.activeNetwork
     val capabilities = cm.getNetworkCapabilities(networkRequest)

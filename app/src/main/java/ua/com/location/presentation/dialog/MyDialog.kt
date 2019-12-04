@@ -1,31 +1,30 @@
 package ua.com.location.presentation.dialog
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.dialog_fragment_description.*
 import ua.com.location.R
 import ua.com.location.data.LocatoinTrak
-import ua.com.location.data.StoreViewModel
 import ua.com.location.di.dialogFragment.DaggerMyDialogComponent
 import ua.com.location.di.dialogFragment.MyDialogPresenterIntefasModul
+import ua.com.location.models.DistributorDataVM
+import ua.com.location.models.IDistributorData
+import ua.com.location.models.repository.room.contant.Content
 import javax.inject.Inject
 
 class MyDialog (var pairLocation: Pair<Double,Double>): DialogFragment(),MyDialogView {
 
     @Inject
     lateinit var myDialogPresentIntefas: MyDialogPresentIntefas
-     private lateinit var item: LocatoinTrak
+     private lateinit var item: Content
 
-    fun setItem(item: LocatoinTrak)= apply {this.item = item  }
+    fun setItem(item: Content)= apply {this.item = item  }
 
 
     override fun onCreateView(inflater: LayoutInflater,  container: ViewGroup?,
@@ -40,7 +39,6 @@ class MyDialog (var pairLocation: Pair<Double,Double>): DialogFragment(),MyDialo
         super.onActivityCreated(savedInstanceState)
         addClickLisan()
         myDialogPresentIntefas.onStart(tag!!)
-
 
     }
 
@@ -71,6 +69,8 @@ class MyDialog (var pairLocation: Pair<Double,Double>): DialogFragment(),MyDialo
     override fun showAddDialog() {
 
     }
+    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+
 
     override fun showDascritionDialog() {
         dialog_fragment_description.setText(item.descript)

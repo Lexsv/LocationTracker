@@ -3,14 +3,11 @@ package ua.com.location.presentation.register
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserProfileChangeRequest
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ua.com.location.data.StoreViewModel
-import ua.com.location.data.room.DataBaseObjact
-import ua.com.location.presentation.login.LoginView
+import ua.com.location.data.LocalStoreVW
+import ua.com.location.models.repository.room.userinfo.UserInfo
 import ua.com.location.util.ActionMessage
 import ua.com.location.util.ProvidContext
-import ua.com.location.util.getConnectivityNet
+import ua.com.location.util.isNet
 import ua.com.location.util.validEnterDataRegister
 import javax.inject.Inject
 
@@ -27,7 +24,7 @@ class RegisterPresent @Inject constructor(val registerView: RegisterView):
     }
 
     override fun registNew(name: String, email: String, password: String, repitPassword: String) {
-        if (getConnectivityNet(ProvidContext.getContext())) {
+        if (isNet(ProvidContext.getContext())) {
             val resalt =    validEnterDataRegister(name = name,
                                                                    email = email,
                                                                    password = password,
@@ -40,18 +37,13 @@ class RegisterPresent @Inject constructor(val registerView: RegisterView):
                 mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-
+                            LocalStoreVW.getUserid().postValue(UserInfo(mAuth.uid!!))
                             registerView.rout(TAGMAP)
                             mAuth.currentUser!!.updateProfile(
                                 UserProfileChangeRequest.Builder().setDisplayName(name).build())
                                 .addOnCompleteListener { taskUpData ->
                                     if (taskUpData.isSuccessful) {
-                                        GlobalScope.launch {
-                                            val mPostViewModel = registerView.getVM()
-                                            StoreViewModel.getUserid().postValue(mAuth.uid)
-                                            StoreViewModel.getListTrak().postValue(mutableListOf())
-                                            mPostViewModel.upDate(DataBaseObjact(mAuth.uid!!, mutableListOf()))
-                                        }
+
                                         registerView.actionMassege("Привет ${mAuth.currentUser!!.displayName}\nвыберите точку")}
                                 }
 

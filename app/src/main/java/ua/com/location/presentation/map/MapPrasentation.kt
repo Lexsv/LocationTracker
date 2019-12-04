@@ -1,13 +1,13 @@
 package ua.com.location.presentation.map
 
-import ua.com.location.data.StoreViewModel
+import ua.com.location.data.LocalStoreVW
 import javax.inject.Inject
 
 class MapPrasentation @Inject constructor(var mapView: MapView): MapPresentationInterfas{
 
 
     override fun onSaveMyLocation(pairLocation: Pair<Double,Double>) {
-        StoreViewModel.getLastLocation().postValue(pairLocation)
+        LocalStoreVW.getLastLocation().postValue(pairLocation)
     }
 
 

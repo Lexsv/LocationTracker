@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Before
-import ua.com.location.util.getConnectivityNet
+import ua.com.location.util.isNet
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -28,6 +28,6 @@ class ExampleInstrumentedTest {
 
     @Test
     fun useAppContext() {
-        Assert.assertEquals(true,getConnectivityNet(mContext))
+        Assert.assertEquals(true,isNet(mContext))
     }
 }

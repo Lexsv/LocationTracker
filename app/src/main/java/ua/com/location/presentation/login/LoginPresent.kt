@@ -1,37 +1,22 @@
 package ua.com.location.presentation.login
 
-import android.app.Application
-import android.content.Context
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.ViewModelStoreOwner
-import com.google.android.gms.dynamic.IFragmentWrapper
+import androidx.lifecycle.Observer
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ua.com.location.data.StoreViewModel
-import ua.com.location.data.room.DataBaseObjact
-import ua.com.location.models.PostVMInrefas
-import ua.com.location.models.PostViewModel
+
+import ua.com.location.data.LocalStoreVW
+import ua.com.location.models.repository.room.userinfo.UserInfo
 
 
 import ua.com.location.util.ActionMessage
 import ua.com.location.util.ProvidContext
-import ua.com.location.util.getConnectivityNet
+import ua.com.location.util.isNet
 import ua.com.location.util.validEnterDataAut
-import java.lang.Appendable
 import javax.inject.Inject
 
-class LoginPresent @Inject constructor(var loginView: LoginView,var postVMInrefas: PostVMInrefas) :
-    LoginPresentInterfas {
-
-    lateinit var  mPostViewModel : PostViewModel
-
+class LoginPresent @Inject constructor(var loginView: LoginView): LoginPresentInterfas {
 
     val TAGCOL = "COLECTION"
     val TAGMAP = "MAP"
@@ -39,21 +24,19 @@ class LoginPresent @Inject constructor(var loginView: LoginView,var postVMInrefa
     private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onLogin(email: String, password: String) {
-        if (getConnectivityNet(ProvidContext.getContext())) {
-            val result = validEnterDataAut(email=email,password = password)
+        if (isNet(ProvidContext.getContext())) {
+            val result = validEnterDataAut(email = email, password = password)
             if (result.first) {
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-
-                                if (mPostViewModel.allUser.value != null){loginView.rout(TAGCOL)
-                                }else{
-                                    loginView.rout(TAGMAP)
-                                }
-                                StoreViewModel.getUserid().postValue(mAuth.uid)
-                                StoreViewModel.getListTrak().postValue(mutableListOf())
-                                mPostViewModel.upDate(DataBaseObjact(mAuth.uid!!, mutableListOf()))
-
+                            var name = "name empty"
+                            if (mAuth.currentUser != null){name = mAuth.currentUser!!.displayName!!}
+                            val user = UserInfo(id = mAuth.uid!!,name = name)
+                            loginView.getVM().saveToRoom(user)
+                            LocalStoreVW.getUserid().postValue(user)
+                            loginView.getVM().fillData()
+                            loginView.rout(TAGCOL)
 
                         } else {
                             if (task.exception is FirebaseAuthException) {
@@ -61,19 +44,21 @@ class LoginPresent @Inject constructor(var loginView: LoginView,var postVMInrefa
                                     "ERROR_WRONG_PASSWORD" -> loginView.actionMassege(ActionMessage.ERROR_WRONG_PASSWORD.result)
                                     "ERROR_USER_NOT_FOUND" -> loginView.actionMassege(ActionMessage.ERROR_USER_NOT_FOUND.result)
                                     "ERROR_INVALID_EMAIL" -> loginView.actionMassege(ActionMessage.ERROR_USER_NOT_FOUND.result)
-                                    else -> Log.e("*******Login*******" ,(task.exception as FirebaseAuthException).errorCode )
+                                    else -> Log.e(
+                                        "*****Login Error*****",
+                                        (task.exception as FirebaseAuthException).errorCode
+                                    )
                                 }
                             }
                         }
                     }
-            } else {loginView.actionMassege(result.second.result)
+            } else {
+                loginView.actionMassege(result.second.result)
             }
-        }else{
+        } else {
             loginView.actionMassege("Включите Интернет!!!")
         }
     }
-
-
 
 
     override fun onStartSckreen(key: String) {
@@ -82,8 +67,12 @@ class LoginPresent @Inject constructor(var loginView: LoginView,var postVMInrefa
 
 
     override fun onStart() {
-        this.mPostViewModel = loginView.getVM()
-        if (mPostViewModel.allUser.value != null){loginView.rout(TAGCOL)}
+        loginView.getVM().fillData()
+        LocalStoreVW.getUserid().observe(loginView.getLifecycleOwner(), Observer {
+           loginView.getVM().getDataUserFromFir(it.id)
+           loginView.rout(TAGCOL)
+        })
+
     }
 
 }

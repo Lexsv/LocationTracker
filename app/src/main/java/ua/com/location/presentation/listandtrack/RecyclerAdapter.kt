@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ua.com.location.R
 import ua.com.location.data.LocatoinTrak
+import ua.com.location.models.repository.room.contant.Content
 
-class RecyclerAdapter(var items: List<LocatoinTrak>, val callback: Callback) :
+class RecyclerAdapter(var items: List<Content>, val callback: Callback) :
     RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder>() {
 
 
@@ -26,7 +27,7 @@ class RecyclerAdapter(var items: List<LocatoinTrak>, val callback: Callback) :
         private val descript = itemView.findViewById<TextView>(R.id.recycler_Text)
 
 
-        fun bind(item: LocatoinTrak) {
+        fun bind(item: Content) {
             title.text = item.title
             descript.text = item.descript
             itemView.setOnClickListener {
@@ -37,6 +38,6 @@ class RecyclerAdapter(var items: List<LocatoinTrak>, val callback: Callback) :
     }
 
     interface Callback {
-        fun onItemClicked(item: LocatoinTrak)
+        fun onItemClicked(item: Content)
     }
 }

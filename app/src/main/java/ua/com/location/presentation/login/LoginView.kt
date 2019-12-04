@@ -1,12 +1,13 @@
 package ua.com.location.presentation.login
 
-import ua.com.location.data.room.AppDatabase
-import ua.com.location.models.PostViewModel
+import androidx.lifecycle.LifecycleOwner
+import ua.com.location.models.IDistributorData
 
 interface LoginView  {
     fun rout(key: String)
     fun actionMassege(key: String)
-    fun getVM(): PostViewModel
+    fun getLifecycleOwner(): LifecycleOwner
+    fun getVM(): IDistributorData
 
 
 }

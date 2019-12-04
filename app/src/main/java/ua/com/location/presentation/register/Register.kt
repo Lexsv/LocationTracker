@@ -12,13 +12,12 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_register.*
 import ua.com.location.MainActivity
 import ua.com.location.R
-import ua.com.location.data.room.AppDatabase
 import ua.com.location.di.register.DaggerRegisterComponent
 
 
 import ua.com.location.di.register.RegisterPresentModul
-import ua.com.location.models.PostViewModel
-import ua.com.location.presentation.login.LoginView
+import ua.com.location.models.DistributorDataVM
+import ua.com.location.models.IDistributorData
 import javax.inject.Inject
 
 
@@ -70,8 +69,7 @@ class Register : Fragment(), RegisterView {
     override fun actionMassege(key: String) {
         Toast.makeText(context, key, Toast.LENGTH_LONG).show()
     }
-    override fun getVM()=
-        ViewModelProviders.of(this).get(PostViewModel::class.java)
+    override fun getVM(): IDistributorData =  ViewModelProviders.of(this).get(DistributorDataVM::class.java)
 
 
 }

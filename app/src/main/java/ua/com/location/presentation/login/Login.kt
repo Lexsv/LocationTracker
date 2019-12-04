@@ -1,7 +1,6 @@
 package ua.com.location.presentation.login
 
 
-import android.app.Application
 import android.os.Bundle
 
 import androidx.fragment.app.Fragment
@@ -9,21 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 
 
 import androidx.navigation.fragment.NavHostFragment
-import androidx.room.Room
 
 
 import kotlinx.android.synthetic.main.fragment_login.*
 import ua.com.location.MainActivity
 
 import ua.com.location.R
-import ua.com.location.data.room.AppDatabase
 import ua.com.location.di.login.DaggerLoginComponent
 import ua.com.location.di.login.LoginPresentModul
-import ua.com.location.models.PostViewModel
+import ua.com.location.models.DistributorDataVM
+import ua.com.location.models.IDistributorData
 
 
 import javax.inject.Inject
@@ -43,7 +42,6 @@ class Login : Fragment(), LoginView {
     ): View? {
         addDaggerDepand()
         MainActivity.MAINTAG = "LOGIN"
-
         return inflater.inflate(R.layout.fragment_login, container, false)}
 
 
@@ -57,13 +55,13 @@ class Login : Fragment(), LoginView {
 
    fun addDaggerDepand(){
        DaggerLoginComponent.builder()
-           .loginPresentModul(LoginPresentModul(this , PostViewModel(activity!!.application)))
+           .loginPresentModul(LoginPresentModul(this))
            .build()
            .inject(this)
    }
 
-    override fun getVM()=
-        ViewModelProviders.of(this).get(PostViewModel::class.java)
+    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+
 
     fun addButnListener(){
         authentication_bt_entry.setOnClickListener{_ ->
@@ -79,6 +77,8 @@ class Login : Fragment(), LoginView {
     override fun actionMassege(key: String) {
         Toast.makeText(context, key, Toast.LENGTH_LONG).show()
     }
+
+    override fun getLifecycleOwner(): LifecycleOwner = this
 
     override fun rout(key: String) {
         when(key) {

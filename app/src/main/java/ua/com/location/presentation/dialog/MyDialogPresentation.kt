@@ -1,17 +1,24 @@
 package ua.com.location.presentation.dialog
 
-import androidx.lifecycle.Observer
-import ua.com.location.data.LocatoinTrak
-import ua.com.location.data.StoreViewModel
 
+
+import ua.com.location.data.LocalStoreVW
+import ua.com.location.models.repository.room.contant.Content
 import javax.inject.Inject
 
 class MyDialogPresentation @Inject constructor(var myDialogView: MyDialogView) : MyDialogPresentIntefas{
 
 
     override fun onSaveDiscription(title: String, discription: String,pair: Pair<Double,Double>) {
-        val list = StoreViewModel.getListTrak().value
-        StoreViewModel.getListTrak().postValue(list!!.plus(LocatoinTrak(title,"$discription \n ${pair}",pair)))
+       val list = LocalStoreVW.getContent().value
+        val content = Content()
+        content.title = title
+        content.descript = discription
+        content.latitude = pair.first
+        content.longitude = pair.second
+
+        myDialogView.getVM().saveToRoom(content)
+        LocalStoreVW.getContent().postValue(list!!.plus(content))
     }
 
     override fun onStart(tag: String) {

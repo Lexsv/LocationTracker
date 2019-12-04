@@ -1,5 +1,6 @@
 package ua.com.location.models
 
+import com.google.firebase.auth.FirebaseAuth
 import ua.com.location.models.repository.room.contant.Content
 
 interface IDistributorData {
@@ -9,4 +10,5 @@ interface IDistributorData {
     fun exit()
     fun saveToFire()
     fun getDataUserFromFir(id:String)
+    fun registr(mAuth : FirebaseAuth)
 }

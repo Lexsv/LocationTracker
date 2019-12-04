@@ -5,6 +5,7 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.coroutines.*
 import ua.com.location.data.LocalStoreVW
@@ -42,6 +43,20 @@ class DistributorDataVM() : ViewModel(), IDistributorData {
         }
 
 
+    }
+
+    override fun registr(mAuth: FirebaseAuth) {
+        uiScope.launch {
+            loadUserToDB(mAuth)
+        }
+        LocalStoreVW.getUserid().postValue(UserInfo(mAuth.uid!!,mAuth.currentUser!!.displayName!!))
+    }
+
+    private suspend fun loadUserToDB(mAuth: FirebaseAuth){
+        withContext(Dispatchers.IO){
+            userinfoDB.deleteAll()
+            userinfoDB.insert(UserInfo(mAuth.uid!!,mAuth.currentUser!!.displayName!!))
+        }
     }
 
     override fun saveToRoom(any: Any) {

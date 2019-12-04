@@ -43,7 +43,7 @@ class RegisterPresent @Inject constructor(val registerView: RegisterView):
                                 UserProfileChangeRequest.Builder().setDisplayName(name).build())
                                 .addOnCompleteListener { taskUpData ->
                                     if (taskUpData.isSuccessful) {
-
+                                        registerView.getVM().registr(mAuth)
                                         registerView.actionMassege("Привет ${mAuth.currentUser!!.displayName}\nвыберите точку")}
                                 }
 

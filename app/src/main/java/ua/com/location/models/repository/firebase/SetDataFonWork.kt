@@ -15,8 +15,6 @@ import ua.com.location.util.ProvidContext
 class SetDataFonWork (ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
     override fun doWork(): Result {
 
-
-
         return try {
             val  contentDB = ContentDB.getInit(ProvidContext.getContext()).getContentDao()
             val resalt = GlobalScope.async {

@@ -16,8 +16,8 @@ import ua.com.location.di.register.DaggerRegisterComponent
 
 
 import ua.com.location.di.register.RegisterPresentModul
-import ua.com.location.models.DistributorDataVM
-import ua.com.location.models.IDistributorData
+import ua.com.location.models.registerModel.IRegister
+import ua.com.location.models.registerModel.RegisterVM
 import javax.inject.Inject
 
 
@@ -69,7 +69,7 @@ class Register : Fragment(), RegisterView {
     override fun actionMassege(key: String) {
         Toast.makeText(context, key, Toast.LENGTH_LONG).show()
     }
-    override fun getVM(): IDistributorData =  ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+    override fun getVM(): IRegister =  ViewModelProviders.of(this).get(RegisterVM::class.java)
 
 
 }

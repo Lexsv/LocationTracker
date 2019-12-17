@@ -1,4 +1,4 @@
-package ua.com.location.models.repository.room.userinfo
+package ua.com.location.repository.room.userinfo
 
 import androidx.room.*
 

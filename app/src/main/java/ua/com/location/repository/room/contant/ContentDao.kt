@@ -1,4 +1,4 @@
-package ua.com.location.models.repository.room.contant
+package ua.com.location.repository.room.contant
 
 import androidx.room.*
 

@@ -8,14 +8,17 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import ua.com.location.di.mainActivity.DaggerMainComponent
 import ua.com.location.di.mainActivity.MainPresenterModul
-import ua.com.location.models.DistributorDataVM
-import ua.com.location.models.IDistributorData
+import ua.com.location.models.mainModel.IMainVM
+import ua.com.location.models.mainModel.MainVM
 import ua.com.location.presentation.mainActivity.MainPresenterInterfas
 import ua.com.location.presentation.mainActivity.MainView
 import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(),MainView {
+
+
+
 
    @Inject
     lateinit var mainPresenterInterfas: MainPresenterInterfas
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity(),MainView {
 
 
     override fun getLifecycleOwner(): LifecycleOwner = this
-    override fun getVM():IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+    override fun getVM():IMainVM = ViewModelProviders.of(this).get(MainVM::class.java)
 
     private fun addDaggerDepand() {
         DaggerMainComponent.builder()
@@ -49,9 +52,9 @@ class MainActivity : AppCompatActivity(),MainView {
         mainPresenterInterfas.onSaveData()
     }
     override fun onBackPressed() {
+
         if(MAINTAG != "COLECTION") {super.onBackPressed()}
     }
-
 
 
 }

@@ -1,7 +1,4 @@
-package ua.com.location.data
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+package ua.com.location.repository.data
 
 
 data class LocatoinTrak (

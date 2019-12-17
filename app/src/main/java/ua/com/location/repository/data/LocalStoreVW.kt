@@ -1,11 +1,11 @@
-package ua.com.location.data
+package ua.com.location.repository.data
 
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-import ua.com.location.models.repository.room.contant.Content
-import ua.com.location.models.repository.room.userinfo.UserInfo
+import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.userinfo.UserInfo
 
 class LocalStoreVW : ViewModel() {
     companion object {
@@ -21,13 +21,17 @@ class LocalStoreVW : ViewModel() {
         @Volatile
         private var storeContent: MutableLiveData<List<Content>> = MutableLiveData()
         fun  getContent(): MutableLiveData<List<Content>> = storeContent
-        fun setValContent(list: List<Content>){
-            storeContent.value = list}
+
+        @Volatile
+        var lastID : Int = -1
+
+
 
         fun clearData(){
             lastLocation = MutableLiveData()
             userInfo = MutableLiveData()
             storeContent = MutableLiveData()
+            lastID = -1
         }
 
     }

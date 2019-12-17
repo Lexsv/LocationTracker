@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ua.com.location.R
-import ua.com.location.data.LocatoinTrak
-import ua.com.location.models.repository.room.contant.Content
+import ua.com.location.repository.room.contant.Content
 
 class RecyclerAdapter(var items: List<Content>, val callback: Callback) :
     RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder>() {

@@ -12,19 +12,16 @@ class MainPresenter @Inject constructor(var mainView: MainView): MainPresenterIn
 
     override fun onStart(context: Context) {
         checkPermissions(context)
-        mainView.getVM().onStartApp()
-        onInternetConnection()
+       // mainView.getVM().onStartApp()
+        isInternetConnection()
     }
 
     override fun onSaveData() {
-        mainView.getVM().saveToFire()
+        mainView.getVM().saveDataUser()
     }
 
-    override fun onDestroy() {
 
-    }
-
-    fun onInternetConnection (){
+    fun isInternetConnection (){
         if (!isNet(ProvidContext.getContext())) {
             mainView.actionMassege("Интернета нет")}
     }

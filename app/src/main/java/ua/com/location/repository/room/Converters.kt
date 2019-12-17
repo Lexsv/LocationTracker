@@ -1,10 +1,10 @@
-package ua.com.location.models.repository.room
+package ua.com.location.repository.room
 
 import androidx.room.TypeConverter
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import ua.com.location.data.LocatoinTrak
+import ua.com.location.repository.data.LocatoinTrak
 
 
 class Converters {

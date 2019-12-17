@@ -1,4 +1,4 @@
-package ua.com.location.models.repository.room.contant
+package ua.com.location.repository.room.contant
 
 import android.content.Context
 import androidx.room.Database
@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = arrayOf(Content::class),version = 1,exportSchema = false)
+@Database(entities = arrayOf(Content::class),version = 2,exportSchema = false)
 abstract class ContentDB  : RoomDatabase(){
     abstract fun getContentDao(): ContentDao
 
@@ -18,7 +18,9 @@ abstract class ContentDB  : RoomDatabase(){
             synchronized(this) {
                 var temp = INIT
                 if (temp == null) {
-                     temp = Room.databaseBuilder(context, ContentDB::class.java, "content").build()
+                     temp = Room.databaseBuilder(context, ContentDB::class.java, "content")
+                         .fallbackToDestructiveMigration()
+                         .build()
                     INIT = temp
                 }
                 return temp

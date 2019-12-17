@@ -15,9 +15,9 @@ import ua.com.location.MainActivity
 import ua.com.location.R
 import ua.com.location.di.listATrak.DaggerListAndTrackComponent
 import ua.com.location.di.listATrak.ListAndTrakPrasentModul
-import ua.com.location.models.DistributorDataVM
-import ua.com.location.models.IDistributorData
-import ua.com.location.models.repository.room.contant.Content
+import ua.com.location.models.listandtrakModel.IListAndTrak
+import ua.com.location.models.listandtrakModel.ListAndTrakVM
+import ua.com.location.repository.room.contant.Content
 import ua.com.location.presentation.dialog.MyDialog
 import javax.inject.Inject
 
@@ -31,10 +31,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     @Inject
     lateinit var  listAndTrackPresentInterface : ListAndTrackPresentInterface
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -100,7 +97,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         }
     }
 
-    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+    override fun getVM(): IListAndTrak = ViewModelProviders.of(this).get(ListAndTrakVM::class.java)
 
     override fun rout(key: String) {
         when(key) {

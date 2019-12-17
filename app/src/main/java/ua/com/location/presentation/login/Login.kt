@@ -21,8 +21,8 @@ import ua.com.location.MainActivity
 import ua.com.location.R
 import ua.com.location.di.login.DaggerLoginComponent
 import ua.com.location.di.login.LoginPresentModul
-import ua.com.location.models.DistributorDataVM
-import ua.com.location.models.IDistributorData
+import ua.com.location.models.loginModel.ILoginVM
+import ua.com.location.models.loginModel.LoginVM
 
 
 import javax.inject.Inject
@@ -60,7 +60,7 @@ class Login : Fragment(), LoginView {
            .inject(this)
    }
 
-    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+    override fun getVM(): ILoginVM = ViewModelProviders.of(this).get(LoginVM::class.java)
 
 
     fun addButnListener(){

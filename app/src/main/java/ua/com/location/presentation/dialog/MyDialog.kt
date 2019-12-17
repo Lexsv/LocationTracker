@@ -10,12 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.dialog_fragment_description.*
 import ua.com.location.R
-import ua.com.location.data.LocatoinTrak
 import ua.com.location.di.dialogFragment.DaggerMyDialogComponent
 import ua.com.location.di.dialogFragment.MyDialogPresenterIntefasModul
-import ua.com.location.models.DistributorDataVM
-import ua.com.location.models.IDistributorData
-import ua.com.location.models.repository.room.contant.Content
+import ua.com.location.models.dialogModel.DialogVM
+import ua.com.location.models.dialogModel.IDialogVM
+import ua.com.location.repository.room.contant.Content
 import javax.inject.Inject
 
 class MyDialog (var pairLocation: Pair<Double,Double>): DialogFragment(),MyDialogView {
@@ -69,7 +68,7 @@ class MyDialog (var pairLocation: Pair<Double,Double>): DialogFragment(),MyDialo
     override fun showAddDialog() {
 
     }
-    override fun getVM(): IDistributorData = ViewModelProviders.of(this).get(DistributorDataVM::class.java)
+    override fun getVM(): IDialogVM = ViewModelProviders.of(this).get(DialogVM::class.java)
 
 
     override fun showDascritionDialog() {

@@ -22,6 +22,7 @@ class SetDataFonWork (ctx: Context, params: WorkerParameters) : Worker(ctx, para
 
     }
 
+
     override fun doWork(): Result {
 
         return try {
@@ -31,11 +32,13 @@ class SetDataFonWork (ctx: Context, params: WorkerParameters) : Worker(ctx, para
                         firebaseDatabase.child(id).child(obj.id.toString()).setValue(obj)
                     }
                 }
+
             if (!lastID.isEmpty()){
                 for ((id, value) in lastID){
                     firebaseDatabase.child(id).child("lastid").setValue(value)
                 }
             }
+
 
             storeMap = mutableListOf()
 

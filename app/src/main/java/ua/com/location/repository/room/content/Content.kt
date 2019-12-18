@@ -1,4 +1,4 @@
-package ua.com.location.repository.room.contant
+package ua.com.location.repository.room.content
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

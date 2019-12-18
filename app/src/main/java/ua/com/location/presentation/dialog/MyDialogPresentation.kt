@@ -2,7 +2,7 @@ package ua.com.location.presentation.dialog
 
 
 import ua.com.location.repository.data.LocalStoreVW
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 import javax.inject.Inject
 
 class MyDialogPresentation @Inject constructor(var myDialogView: MyDialogView) :
@@ -27,6 +27,19 @@ class MyDialogPresentation @Inject constructor(var myDialogView: MyDialogView) :
         }
         myDialogView.getVM().saveData(content)
         myDialogView.getVM().upDataLastId(baseId)
+
+    }
+
+    override fun onEdit() {
+        myDialogView.editContant()
+    }
+
+    override fun upDataItom(title: String, discription: String) {
+        myDialogView.savedContant()
+        val upDatItom = LocalStoreVW.nowUpDataItom
+        upDatItom!!.title = title
+        upDatItom.descript = discription
+        myDialogView.getVM().upDataContant(upDatItom)
 
 
 

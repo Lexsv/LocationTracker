@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import ua.com.location.repository.data.LocalStoreVW
 import ua.com.location.models.loginModel.LoginVM
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 import ua.com.location.repository.room.userinfo.UserInfo
 import ua.com.location.util.ProvidContext
 import ua.com.location.util.isNet
@@ -33,7 +33,6 @@ class DBOFireBase : IDBOFireBase {
                         val laslIdFireDB = p0.getValue(Int::class.java)
                         val lastIDRoom = LocalStoreVW.lastID
                         LocalStoreVW.lastID = if(lastIDRoom > laslIdFireDB!!) lastIDRoom else laslIdFireDB
-
                     }
                     else -> {
                         val content = p0.getValue(Content::class.java)
@@ -86,6 +85,11 @@ class DBOFireBase : IDBOFireBase {
             myRef.child(LocalStoreVW.getUserid().value!!.id).child(content.id.toString())
                 .setValue(content)
         } else {
+
+            myRef.child(LocalStoreVW.getUserid().value!!.id).child(content.id.toString())
+                .setValue(content)
+
+
             SetDataFonWork.storeMap = SetDataFonWork.storeMap.plusElement(LocalStoreVW.getUserid().value!!.id to content)
             val workManager = WorkManager.getInstance(ProvidContext.getContext())
             val constraints: Constraints = Constraints.Builder()
@@ -149,7 +153,7 @@ class DBOFireBase : IDBOFireBase {
     }
 
     override fun deleteContent(id: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       myRef.child(LocalStoreVW.getUserid().value!!.id).child(id).removeValue()
     }
 
     override fun updateLastId(lastID: Int) {
@@ -170,5 +174,18 @@ class DBOFireBase : IDBOFireBase {
             workManager.enqueue(myWorkRequest)
 
         }
+    }
+
+    override fun saveData() {
+        val list = LocalStoreVW.getContent().value
+        val lastId = LocalStoreVW.lastID
+        updateLastId(lastId)
+        if (list != null){
+            for (c in list){
+                insert(c)
+            }
+        }
+
+
     }
 }

@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 import ua.com.location.repository.data.LocalStoreVW
 import ua.com.location.models.BaseVM
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 import ua.com.location.repository.room.userinfo.UserInfo
 import ua.com.location.presentation.login.LoginPresent
 

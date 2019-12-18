@@ -2,7 +2,7 @@ package ua.com.location.repository.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import ua.com.location.models.loginModel.LoginVM
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 
 interface IDBOFireBase {
 
@@ -13,6 +13,7 @@ interface IDBOFireBase {
     fun loadContant()
     fun loadContantFoneWork()
     fun loadData(mAuth: FirebaseAuth,callbackToSave: LoginVM.CallbackToSave)
+    fun saveData()
 
 
 }

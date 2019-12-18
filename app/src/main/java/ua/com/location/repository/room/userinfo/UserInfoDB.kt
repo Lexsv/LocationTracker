@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import ua.com.location.repository.room.contant.ContentDB
 
 
 @Database(entities = arrayOf(UserInfo::class),version = 2,exportSchema = false)

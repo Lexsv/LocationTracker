@@ -5,7 +5,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.firebase.database.*
 import ua.com.location.repository.data.LocalStoreVW
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 
 
 class GetDataFonWork(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {

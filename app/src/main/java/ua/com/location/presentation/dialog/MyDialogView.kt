@@ -8,4 +8,6 @@ interface MyDialogView {
     fun showAddDialog()
     fun showDascritionDialog()
     fun getVM(): IDialogVM
+    fun editContant()
+    fun savedContant()
 }

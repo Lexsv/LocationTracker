@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import ua.com.location.repository.firebase.DBOFireBase
 import ua.com.location.repository.firebase.IDBOFireBase
-import ua.com.location.repository.room.contant.ContentDB
-import ua.com.location.repository.room.contant.ContentDao
+import ua.com.location.repository.room.content.ContentDB
+import ua.com.location.repository.room.content.ContentDao
 import ua.com.location.repository.room.userinfo.UserInfoDB
 import ua.com.location.repository.room.userinfo.UserinfoDao
 import ua.com.location.util.ProvidContext

@@ -1,15 +1,19 @@
 package ua.com.location.presentation.listandtrack
 
 
+import android.graphics.*
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
 import ua.com.location.MainActivity
 import ua.com.location.R
@@ -17,7 +21,7 @@ import ua.com.location.di.listATrak.DaggerListAndTrackComponent
 import ua.com.location.di.listATrak.ListAndTrakPrasentModul
 import ua.com.location.models.listandtrakModel.IListAndTrak
 import ua.com.location.models.listandtrakModel.ListAndTrakVM
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 import ua.com.location.presentation.dialog.MyDialog
 import javax.inject.Inject
 
@@ -27,6 +31,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     val TAGREG = "RAGISTER"
     val TAGCOL = "COLECTION"
     val TAGLOGIN = "LOGIN"
+    private val p = Paint()
 
     @Inject
     lateinit var  listAndTrackPresentInterface : ListAndTrackPresentInterface
@@ -47,6 +52,9 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         addButtnListeners()
     }
 
+    override fun actionMassege(key: String) {
+        Toast.makeText(context, key, Toast.LENGTH_LONG).show()
+    }
 
 
     fun addButtnListeners(){
@@ -68,10 +76,62 @@ class ListAndTrack : Fragment(), ListAndTrackView {
                     RecyclerAdapter.Callback {
                     override fun onItemClicked(item: Content) {
                         showDialig(item)
+                        listAndTrackPresentInterface.nowUpdat(item)
                     }
                 })
         myRecycler.adapter = recyclerAdapter
         myRecycler.layoutManager = LinearLayoutManager(context)
+
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                if (direction == ItemTouchHelper.LEFT ){
+                    listAndTrackPresentInterface.remove(position)
+                }
+            }
+
+            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+
+                val icon: Bitmap
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
+                    val itemView = viewHolder.itemView
+                    val height = itemView.bottom.toFloat() - itemView.top.toFloat()
+                    val width = height / 3
+
+                    if (dX < 0) {
+                        p.color = Color.parseColor("#D32F2F")
+                        val background = RectF(
+                            itemView.right.toFloat() + dX,
+                            itemView.top.toFloat(),
+                            itemView.right.toFloat(),
+                            itemView.bottom.toFloat()
+                        )
+                        c.drawRect(background, p)
+                        icon = BitmapFactory.decodeResource(resources, R.drawable.delete)
+                        val icon_dest = RectF(
+                            itemView.right.toFloat() - 2 * width,
+                            itemView.top.toFloat() + width,
+                            itemView.right.toFloat() - width,
+                            itemView.bottom.toFloat() - width
+                        )
+                        c.drawBitmap(icon, null, icon_dest, p)
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(myRecycler)
+
+
     }
     private fun addDaggerDepand(){
         DaggerListAndTrackComponent.builder()
@@ -108,4 +168,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         }
     }
 
+    override fun welcome(key: String) {
+        toolbar_welcome.setText("Привет $key")
+    }
 }

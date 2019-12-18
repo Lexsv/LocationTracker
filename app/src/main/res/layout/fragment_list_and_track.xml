@@ -16,8 +16,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    >
+                    android:layout_height="?attr/actionBarSize" >
+                        <TextView
+                            android:id="@+id/toolbar_welcome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_size_10"                            />
+
                      <ImageButton
                          android:id="@+id/toolbar_exit"
                          android:layout_width="wrap_content"

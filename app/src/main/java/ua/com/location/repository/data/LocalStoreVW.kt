@@ -4,7 +4,7 @@ package ua.com.location.repository.data
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-import ua.com.location.repository.room.contant.Content
+import ua.com.location.repository.room.content.Content
 import ua.com.location.repository.room.userinfo.UserInfo
 
 class LocalStoreVW : ViewModel() {
@@ -24,6 +24,9 @@ class LocalStoreVW : ViewModel() {
 
         @Volatile
         var lastID : Int = -1
+
+        @Volatile
+        var nowUpDataItom: Content? = null
 
 
 

@@ -26,7 +26,10 @@ class LocalStoreVW : ViewModel() {
         var lastID : Int = -1
 
         @Volatile
-        var nowUpDataItom: Content? = null
+        var workingItom: Content? = null
+
+        @Volatile
+        var creatWay: Boolean = false
 
 
 

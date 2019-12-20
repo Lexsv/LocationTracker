@@ -1,5 +1,6 @@
 package ua.com.location
 
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -10,6 +11,7 @@ import ua.com.location.di.mainActivity.DaggerMainComponent
 import ua.com.location.di.mainActivity.MainPresenterModul
 import ua.com.location.models.mainModel.IMainVM
 import ua.com.location.models.mainModel.MainVM
+import ua.com.location.presentation.mainActivity.GPSBroadcastReceiver
 import ua.com.location.presentation.mainActivity.MainPresenterInterfas
 import ua.com.location.presentation.mainActivity.MainView
 import javax.inject.Inject
@@ -26,9 +28,11 @@ class MainActivity : AppCompatActivity(),MainView {
          var MAINTAG: String = "LOGIN"
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addDaggerDepand()
+
         mainPresenterInterfas.onStart(this)
         setContentView(R.layout.activity_main)
     }
@@ -55,6 +59,8 @@ class MainActivity : AppCompatActivity(),MainView {
 
         if(MAINTAG != "COLECTION") {super.onBackPressed()}
     }
+
+
 
 
 }

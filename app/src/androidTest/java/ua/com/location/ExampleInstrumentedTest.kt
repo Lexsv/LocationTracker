@@ -10,6 +10,7 @@ import org.junit.runner.RunWith
 
 import org.junit.Before
 import ua.com.location.util.isNet
+import ua.com.location.util.myLocation
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -30,4 +31,10 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         Assert.assertEquals(true,isNet(mContext))
     }
+
+    @Test
+    fun myLocat() {
+
+    }
+
 }

@@ -36,7 +36,7 @@ class MyDialogPresentation @Inject constructor(var myDialogView: MyDialogView) :
 
     override fun upDataItom(title: String, discription: String) {
         myDialogView.savedContant()
-        val upDatItom = LocalStoreVW.nowUpDataItom
+        val upDatItom = LocalStoreVW.workingItom
         upDatItom!!.title = title
         upDatItom.descript = discription
         myDialogView.getVM().upDataContant(upDatItom)

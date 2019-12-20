@@ -44,4 +44,7 @@ class ListAndTrakVM: BaseVM(),IListAndTrak {
         }else Log.i("* DB UserInfo Delete *", "fail")
     }
 
+
+
+
 }

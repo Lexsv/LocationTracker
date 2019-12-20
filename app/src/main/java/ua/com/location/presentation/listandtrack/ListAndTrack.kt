@@ -3,6 +3,7 @@ package ua.com.location.presentation.listandtrack
 
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ua.com.location.MainActivity
 import ua.com.location.R
 import ua.com.location.di.listATrak.DaggerListAndTrackComponent
@@ -23,6 +27,8 @@ import ua.com.location.models.listandtrakModel.IListAndTrak
 import ua.com.location.models.listandtrakModel.ListAndTrakVM
 import ua.com.location.repository.room.content.Content
 import ua.com.location.presentation.dialog.MyDialog
+import ua.com.location.repository.data.LocalStoreVW
+import ua.com.location.util.myLocation
 import javax.inject.Inject
 
 class ListAndTrack : Fragment(), ListAndTrackView {
@@ -34,7 +40,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     private val p = Paint()
 
     @Inject
-    lateinit var  listAndTrackPresentInterface : ListAndTrackPresentInterface
+    lateinit var listAndTrackPresentInterface: ListAndTrackPresentInterface
 
 
     override fun onCreateView(
@@ -52,21 +58,29 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         addButtnListeners()
     }
 
-    override fun actionMassege(key: String) {
-        Toast.makeText(context, key, Toast.LENGTH_LONG).show()
+
+    private fun addDaggerDepand() {
+        DaggerListAndTrackComponent.builder()
+            .listAndTrakPrasentModul(ListAndTrakPrasentModul(this))
+            .build()
+            .inject(this)
     }
 
-
-    fun addButtnListeners(){
-        list_float_button.setOnClickListener{_ ->
+    fun addButtnListeners() {
+        list_float_button.setOnClickListener { _ ->
             listAndTrackPresentInterface.onGoTo(TAGMAP)
         }
 
-        toolbar_exit.setOnClickListener{_ ->
+
+        toolbar_exit.setOnClickListener { _ ->
             listAndTrackPresentInterface.onExit()
         }
     }
 
+
+    override fun actionMassege(key: String) {
+        Toast.makeText(context, key, Toast.LENGTH_LONG).show()
+    }
 
     override fun showRecyclerList(list: List<Content>) {
         val recyclerAdapter =
@@ -82,7 +96,8 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         myRecycler.adapter = recyclerAdapter
         myRecycler.layoutManager = LinearLayoutManager(context)
 
-        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ){
+        val simpleItemTouchCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -91,12 +106,19 @@ class ListAndTrack : Fragment(), ListAndTrackView {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                if (direction == ItemTouchHelper.LEFT ){
+                if (direction == ItemTouchHelper.LEFT) {
                     listAndTrackPresentInterface.remove(position)
+                }
+                if (direction == ItemTouchHelper.RIGHT) {
+                    listAndTrackPresentInterface.creatPath(position)
                 }
             }
 
-            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            override fun onChildDraw(
+                c: Canvas, recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+            ) {
 
                 val icon: Bitmap
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
@@ -105,7 +127,25 @@ class ListAndTrack : Fragment(), ListAndTrackView {
                     val height = itemView.bottom.toFloat() - itemView.top.toFloat()
                     val width = height / 3
 
-                    if (dX < 0) {
+                    if (dX > 0) {
+                        p.color = Color.parseColor("#00e100")
+                        val background =
+                            RectF(
+                                itemView.left.toFloat(),
+                                itemView.top.toFloat(),
+                                dX,
+                                itemView.bottom.toFloat()
+                            )
+                        c.drawRect(background, p)
+                        icon = BitmapFactory.decodeResource(resources, R.drawable.location)
+                        val icon_dest = RectF(
+                            itemView.left.toFloat() + width,
+                            itemView.top.toFloat() + width,
+                            itemView.left.toFloat() + 2 * width,
+                            itemView.bottom.toFloat() - width
+                        )
+                        c.drawBitmap(icon, null, icon_dest, p)
+                    } else {
                         p.color = Color.parseColor("#D32F2F")
                         val background = RectF(
                             itemView.right.toFloat() + dX,
@@ -124,31 +164,34 @@ class ListAndTrack : Fragment(), ListAndTrackView {
                         c.drawBitmap(icon, null, icon_dest, p)
                     }
                 }
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
             }
-
         }
         val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(myRecycler)
 
 
     }
-    private fun addDaggerDepand(){
-        DaggerListAndTrackComponent.builder()
-            .listAndTrakPrasentModul(ListAndTrakPrasentModul(this))
-            .build()
-            .inject(this)
-    }
+
 
     override fun getLifecycleOwner(): LifecycleOwner = this
 
 
     override fun showDialig(item: Content) {
-        MyDialog(item.latitude to item.longitude).setItem(item).show(childFragmentManager,"VIEWITEM")
+        MyDialog(item.latitude to item.longitude).setItem(item)
+            .show(childFragmentManager, "VIEWITEM")
     }
 
     override fun gotoFragment(key: String) {
-        when(key) {
+        when (key) {
             TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
             TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
@@ -160,7 +203,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     override fun getVM(): IListAndTrak = ViewModelProviders.of(this).get(ListAndTrakVM::class.java)
 
     override fun rout(key: String) {
-        when(key) {
+        when (key) {
             TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
             TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)

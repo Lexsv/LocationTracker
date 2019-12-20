@@ -2,6 +2,7 @@ package ua.com.location.presentation.mainActivity
 
 
 import android.content.Context
+import android.content.IntentFilter
 import ua.com.location.util.ProvidContext
 import ua.com.location.util.checkPermissions
 
@@ -12,7 +13,7 @@ class MainPresenter @Inject constructor(var mainView: MainView): MainPresenterIn
 
     override fun onStart(context: Context) {
         checkPermissions(context)
-       // mainView.getVM().onStartApp()
+        context.registerReceiver(GPSBroadcastReceiver(), IntentFilter("android.location.PROVIDERS_CHANGED"))
         isInternetConnection()
     }
 

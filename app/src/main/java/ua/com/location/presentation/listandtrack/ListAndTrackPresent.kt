@@ -1,6 +1,5 @@
 package ua.com.location.presentation.listandtrack
 
-import android.util.Log
 import androidx.lifecycle.Observer
 import ua.com.location.repository.data.LocalStoreVW
 import ua.com.location.repository.room.content.Content
@@ -47,8 +46,18 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
 
     }
 
+    override fun creatPath(position: Int) {
+        LocalStoreVW.creatWay = true
+        if (LocalStoreVW.getContent().value!!.size == 1){
+            LocalStoreVW.workingItom = LocalStoreVW.getContent().value!![0]
+        }else{
+            LocalStoreVW.workingItom =  (LocalStoreVW.getContent().value as ArrayList)[position]
+        }
+        listAndTrackView.rout("MAP")
+    }
+
     override fun nowUpdat(item: Content) {
-        LocalStoreVW.nowUpDataItom = item
+        LocalStoreVW.workingItom = item
     }
 }
 

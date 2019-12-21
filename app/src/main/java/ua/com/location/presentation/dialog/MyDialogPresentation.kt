@@ -23,7 +23,13 @@ class MyDialogPresentation @Inject constructor(var myDialogView: MyDialogView) :
         if (list == null) {
             LocalStoreVW.getContent().postValue(listOf(content))
         } else {
-            LocalStoreVW.getContent().postValue(list.plus(content))
+            if (list.size == 1){
+                LocalStoreVW.getContent().postValue(list.plus(content))
+            }else{
+                val arrayList = list as ArrayList
+                arrayList.add(0,content)
+                LocalStoreVW.getContent().postValue(arrayList)
+            }
         }
         myDialogView.getVM().saveData(content)
         myDialogView.getVM().upDataLastId(baseId)

@@ -31,6 +31,9 @@ class LocalStoreVW : ViewModel() {
         @Volatile
         var creatWay: Boolean = false
 
+        @Volatile
+         var   lastremovedItom : Pair<Int,Content?> = 0 to null
+
 
 
         fun clearData(){

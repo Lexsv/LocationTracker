@@ -35,6 +35,8 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
     }
 
     override fun remove(position: Int) {
+        LocalStoreVW.lastremovedItom = position to LocalStoreVW.getContent().value!![position]
+        listAndTrackView.showRestart()
         if (LocalStoreVW.getContent().value!!.size == 1){
             listAndTrackView.getVM().removeItom(LocalStoreVW.getContent().value!![0])
             LocalStoreVW.getContent().value = mutableListOf()
@@ -58,6 +60,10 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
 
     override fun nowUpdat(item: Content) {
         LocalStoreVW.workingItom = item
+    }
+
+    override fun onReestablishItom() {
+        listAndTrackView.getVM().reestablishItom()
     }
 }
 

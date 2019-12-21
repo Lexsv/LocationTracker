@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -56,6 +59,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         super.onActivityCreated(savedInstanceState)
         listAndTrackPresentInterface.onStart()
         addButtnListeners()
+
     }
 
 
@@ -125,10 +129,10 @@ class ListAndTrack : Fragment(), ListAndTrackView {
 
                     val itemView = viewHolder.itemView
                     val height = itemView.bottom.toFloat() - itemView.top.toFloat()
-                    val width = height / 3
+                    val width = height /3
 
                     if (dX > 0) {
-                        p.color = Color.parseColor("#00e100")
+                        p.color = Color.parseColor("#c9c94b")
                         val background =
                             RectF(
                                 itemView.left.toFloat(),
@@ -137,7 +141,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
                                 itemView.bottom.toFloat()
                             )
                         c.drawRect(background, p)
-                        icon = BitmapFactory.decodeResource(resources, R.drawable.location)
+                        icon = BitmapFactory.decodeResource(resources, R.drawable.sent)
                         val icon_dest = RectF(
                             itemView.left.toFloat() + width,
                             itemView.top.toFloat() + width,
@@ -214,4 +218,16 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     override fun welcome(key: String) {
         toolbar_welcome.setText("Привет $key")
     }
+
+
+    override fun showRestart() {
+        Snackbar.make(requireView(),"Отменить удаление", Snackbar.LENGTH_LONG)
+            .setAction("ok"){
+                listAndTrackPresentInterface.onReestablishItom()
+            }
+            .setActionTextColor(Color.YELLOW)
+            .show()
+
+    }
+
 }

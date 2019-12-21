@@ -9,4 +9,5 @@ interface ListAndTrackPresentInterface {
     fun remove(position: Int)
     fun creatPath(position: Int)
     fun nowUpdat(item: Content)
+    fun onReestablishItom()
 }

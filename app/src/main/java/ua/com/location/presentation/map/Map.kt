@@ -99,11 +99,10 @@ class Map : Fragment(), OnMapReadyCallback, MapView {
     private fun addButnListener() {
         map_float_button.setOnClickListener { _ ->
            myLocation().addOnSuccessListener {
-                mMap.clear()
+               mMap.clear()
                onMapReady(mMap)
                MyDialog(it.latitude to it.longitude).show(childFragmentManager, "MAP")
            }
-
 
         }
     }

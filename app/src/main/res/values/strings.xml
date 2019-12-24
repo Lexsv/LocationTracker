@@ -19,4 +19,9 @@
     <string name="empty_list">Нет записей.   Нажмите \"+ \"</string>
     <string name="title">Title</string>
     <string name="description_plan">Description plan</string>
+    <string name="nav_header_desc">avatar</string>
+    <string name="nav_header_title">Имя</string>
+    <string name="nav_header_subtitle">Статус</string>
+    <string name="exit">Выход</string>
+    <string name="map">Map</string>
 </resources>

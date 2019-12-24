@@ -221,7 +221,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
 
 
     override fun showRestart() {
-        Snackbar.make(requireView(),"Отменить удаление", Snackbar.LENGTH_LONG)
+        Snackbar.make(requireView(),"Отменить удаление", 3000)
             .setAction("ok"){
                 listAndTrackPresentInterface.onReestablishItom()
             }

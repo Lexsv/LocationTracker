@@ -55,7 +55,6 @@ class Map : Fragment(), OnMapReadyCallback, MapView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MainActivity.MAINTAG = "MAP"
         val rootView = inflater.inflate(R.layout.fragment_map, container, false)
         val mapFragment= childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)

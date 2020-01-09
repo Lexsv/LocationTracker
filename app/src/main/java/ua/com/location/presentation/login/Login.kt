@@ -23,16 +23,14 @@ import ua.com.location.di.login.DaggerLoginComponent
 import ua.com.location.di.login.LoginPresentModul
 import ua.com.location.models.loginModel.ILoginVM
 import ua.com.location.models.loginModel.LoginVM
+import ua.com.location.presentation.BaseFragment
 
 
 import javax.inject.Inject
 
 
-class Login : Fragment(), LoginView {
+class Login : BaseFragment(), LoginView {
 
-    val TAGMAP = "MAP"
-    val TAGREG = "RAGISTER"
-    val TAGCOL = "COLECTION"
     @Inject
     lateinit var loginPresentInterfas: LoginPresentInterfas
 
@@ -41,7 +39,6 @@ class Login : Fragment(), LoginView {
         savedInstanceState: Bundle?
     ): View? {
         addDaggerDepand()
-        MainActivity.MAINTAG = "LOGIN"
         return inflater.inflate(R.layout.fragment_login, container, false)}
 
 

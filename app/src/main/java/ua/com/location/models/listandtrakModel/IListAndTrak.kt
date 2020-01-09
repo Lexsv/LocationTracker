@@ -6,7 +6,6 @@ import kotlinx.coroutines.Deferred
 import ua.com.location.repository.room.content.Content
 
 interface IListAndTrak {
-    fun exit()
     fun removeItom(content : Content)
     fun reestablishItom()
 }

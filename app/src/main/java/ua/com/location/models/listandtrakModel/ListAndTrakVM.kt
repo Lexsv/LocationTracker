@@ -22,31 +22,6 @@ class ListAndTrakVM: BaseVM(),IListAndTrak {
 
     }
 
-    override fun exit() {
-        firebase.saveData()
-        ContentDB.closer()
-        UserInfoDB.closer()
-        LocalStoreVW.clearData()
-        val dataBase = File(ProvidContext.getContext().applicationInfo.dataDir + "/databases")
-        val dbContent = File(dataBase,"content")
-        val dbContent1 = File(dataBase,"content-shm")
-        val dbContent2 = File(dataBase,"content-wal")
-        val dbUserInfo = File(dataBase,"userinfo")
-        val dbUserInfo1 = File(dataBase,"userinfo-shm")
-        val dbUserInfo2 = File(dataBase,"userinfo-wal")
-        if (dbContent.delete()) {
-            dbContent1.delete()
-            dbContent2.delete()
-            Log.i("** DB Contant Delete **", "OK")
-        }else Log.i("** DB Contant Delete **", "fail")
-
-        if (dbUserInfo.delete()) {
-            dbUserInfo1.delete()
-            dbUserInfo2.delete()
-            Log.i("* DB UserInfo Delete *", "OK")
-        }else Log.i("* DB UserInfo Delete *", "fail")
-    }
-
     override fun reestablishItom() {
         GlobalScope.launch(Dispatchers.IO) { contentDB.insert(LocalStoreVW.lastremovedItom.second!!) }
         firebase.insert(LocalStoreVW.lastremovedItom.second!!)

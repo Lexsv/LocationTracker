@@ -16,6 +16,7 @@ class MapPrasentation @Inject constructor(var mapView: MapView): MapPresentation
     }
 
     override fun onStart() {
+        LocalStoreVW.nowFragment = "MAP"
         if (LocalStoreVW.creatWay){
                 myLocation().addOnSuccessListener{
                    GlobalScope.launch(Dispatchers.Main) {
@@ -25,7 +26,6 @@ class MapPrasentation @Inject constructor(var mapView: MapView): MapPresentation
                        mapView.creatWay(linePath)
                    }
             }
-
             LocalStoreVW.creatWay = false
         }
     }

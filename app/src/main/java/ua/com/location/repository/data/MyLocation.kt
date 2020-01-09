@@ -21,7 +21,6 @@ class MyLocation(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
             myLocation().addOnSuccessListener {
                 firebaseDatabase.child("lastLoc").setValue("lan: ${it.latitude} lon: ${it.longitude}")
             }
-            Log.i("++++++++++++++","ok")
 
 
             Result.success()

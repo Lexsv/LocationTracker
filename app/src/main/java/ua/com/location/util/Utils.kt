@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -93,6 +94,15 @@ fun getURLQuaryPath(from: LatLng, to: LatLng): String {
     val params = "$origin&$dest&$sensor"
     return "https://maps.googleapis.com/maps/api/directions/json?$params&key=AIzaSyAFxSY7hczw7yUQjR96zh-N825aesUxe6I"
 }
+
+
+
+fun isLocationOn(): Boolean{
+    val locationManager = ProvidContext.getContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+}
+
 
 
 

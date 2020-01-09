@@ -4,6 +4,7 @@ import android.util.Log
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import ua.com.location.repository.data.LocalStoreVW
 
 
 import ua.com.location.util.ActionMessage
@@ -55,6 +56,7 @@ class LoginPresent @Inject constructor(var loginView: LoginView): LoginPresentIn
 
 
     override fun onStartSckreen(key: String) {
+        LocalStoreVW.nowFragment = "REGISTER"
         loginView.rout(key)
     }
 

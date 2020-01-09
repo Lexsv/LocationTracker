@@ -13,13 +13,24 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {
+
         applicationId "ua.com.location"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
     buildTypes {
         release {
@@ -31,6 +42,8 @@ android {
 ext {
     dagger_version = '2.17'
 }
+
+
 
 kapt {
     generateStubs = true
@@ -51,16 +64,22 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "com.google.dagger:dagger:$dagger_version"
 
+
+
+
     //  Navigation Fragment
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'android.arch.navigation:navigation-testing:1.0.0-alpha08'
 
-    //Google ic_map
+    //Google b_map
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+
+    //Time Line
+    implementation 'com.github.qapqap:TimelineView:v1.6'
 
 
 
@@ -85,6 +104,9 @@ dependencies {
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.room:room-guava:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
+
+    //Calendar
+    implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'

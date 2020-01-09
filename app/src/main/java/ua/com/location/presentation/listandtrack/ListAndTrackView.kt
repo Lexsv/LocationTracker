@@ -12,6 +12,6 @@ interface ListAndTrackView {
     fun getVM(): IListAndTrak
     fun rout(key: String)
     fun actionMassege(key: String)
-    fun welcome(key: String)
     fun showRestart()
+    fun menuvisibility()
 }

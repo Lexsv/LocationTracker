@@ -1,24 +1,36 @@
 package ua.com.location.presentation.listandtrack
 
 
+import android.content.Intent
 import android.graphics.*
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list_and_track.*
+import kotlinx.android.synthetic.main.nav_header.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,18 +40,16 @@ import ua.com.location.di.listATrak.DaggerListAndTrackComponent
 import ua.com.location.di.listATrak.ListAndTrakPrasentModul
 import ua.com.location.models.listandtrakModel.IListAndTrak
 import ua.com.location.models.listandtrakModel.ListAndTrakVM
+import ua.com.location.presentation.BaseFragment
 import ua.com.location.repository.room.content.Content
 import ua.com.location.presentation.dialog.MyDialog
 import ua.com.location.repository.data.LocalStoreVW
 import ua.com.location.util.myLocation
 import javax.inject.Inject
 
-class ListAndTrack : Fragment(), ListAndTrackView {
+class ListAndTrack : BaseFragment(), ListAndTrackView {
 
-    val TAGMAP = "MAP"
-    val TAGREG = "RAGISTER"
-    val TAGCOL = "COLECTION"
-    val TAGLOGIN = "LOGIN"
+
     private val p = Paint()
 
     @Inject
@@ -50,7 +60,6 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MainActivity.MAINTAG = "COLECTION"
         addDaggerDepand()
         return inflater.inflate(R.layout.fragment_list_and_track, container, false)
     }
@@ -59,6 +68,7 @@ class ListAndTrack : Fragment(), ListAndTrackView {
         super.onActivityCreated(savedInstanceState)
         listAndTrackPresentInterface.onStart()
         addButtnListeners()
+
 
     }
 
@@ -73,11 +83,6 @@ class ListAndTrack : Fragment(), ListAndTrackView {
     fun addButtnListeners() {
         list_float_button.setOnClickListener { _ ->
             listAndTrackPresentInterface.onGoTo(TAGMAP)
-        }
-
-
-        toolbar_exit.setOnClickListener { _ ->
-            listAndTrackPresentInterface.onExit()
         }
     }
 
@@ -200,6 +205,8 @@ class ListAndTrack : Fragment(), ListAndTrackView {
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
             TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
             TAGLOGIN -> NavHostFragment.findNavController(this).navigate(R.id.login)
+            TAGCALENDAR -> NavHostFragment.findNavController(this).navigate(R.id.calendar)
+
 
         }
     }
@@ -211,13 +218,11 @@ class ListAndTrack : Fragment(), ListAndTrackView {
             TAGREG -> NavHostFragment.findNavController(this).navigate(R.id.register)
             TAGCOL -> NavHostFragment.findNavController(this).navigate(R.id.listAndTrack)
             TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
+            TAGCALENDAR -> NavHostFragment.findNavController(this).navigate(R.id.calendar)
 
         }
     }
 
-    override fun welcome(key: String) {
-        toolbar_welcome.setText("Привет $key")
-    }
 
 
     override fun showRestart() {
@@ -230,4 +235,8 @@ class ListAndTrack : Fragment(), ListAndTrackView {
 
     }
 
+    override fun menuvisibility() {
+        (activity as AppCompatActivity).findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar).visibility = View.VISIBLE
+        (activity as AppCompatActivity).findViewById<DrawerLayout>(R.id.drawer_layout).setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
 }

@@ -18,11 +18,12 @@ import ua.com.location.di.register.DaggerRegisterComponent
 import ua.com.location.di.register.RegisterPresentModul
 import ua.com.location.models.registerModel.IRegister
 import ua.com.location.models.registerModel.RegisterVM
+import ua.com.location.presentation.BaseFragment
 import javax.inject.Inject
 
 
-class Register : Fragment(), RegisterView {
-    val TAGMAP = "MAP"
+class Register : BaseFragment(), RegisterView {
+
     @Inject
     lateinit var registerPresentInterfas: RegisterPresentInterfas
 
@@ -31,7 +32,6 @@ class Register : Fragment(), RegisterView {
         savedInstanceState: Bundle?
     ): View? {
         addDaggerDepand()
-        MainActivity.MAINTAG = "RAGISTER"
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
@@ -64,7 +64,6 @@ class Register : Fragment(), RegisterView {
                TAGMAP -> NavHostFragment.findNavController(this).navigate(R.id.map)
             }
     }
-
 
     override fun actionMassege(key: String) {
         Toast.makeText(context, key, Toast.LENGTH_LONG).show()

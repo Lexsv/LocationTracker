@@ -33,9 +33,16 @@
         <action
             android:id="@+id/action_listAndTrack_to_map"
             app:destination="@id/map" />
+        <action
+            android:id="@+id/action_listAndTrack_to_calenrar"
+            app:destination="@id/calendar" />
     </fragment>
     <fragment
         android:id="@+id/map"
         android:name="ua.com.location.presentation.map.Map"
         android:label="Map" />
+    <fragment
+        android:id="@+id/calendar"
+        android:name="ua.com.location.presentation.calendar.Calendar"
+        android:label="Calenrar" />
 </navigation>

@@ -4,5 +4,6 @@ import android.content.Context
 
 interface MainPresenterInterfas {
     fun onStart(context: Context)
-    fun onSaveData()
+    fun onExit()
+    fun onClick(key:String)
 }

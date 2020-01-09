@@ -1,9 +1,13 @@
 package ua.com.location.presentation.listandtrack
 
+import android.view.MenuItem
 import androidx.lifecycle.Observer
+import com.google.android.material.navigation.NavigationView
+import ua.com.location.R
 import ua.com.location.repository.data.LocalStoreVW
 import ua.com.location.repository.room.content.Content
 import ua.com.location.util.ProvidContext
+import ua.com.location.util.isLocationOn
 import ua.com.location.util.isNet
 
 import javax.inject.Inject
@@ -12,26 +16,19 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
     ListAndTrackPresentInterface {
 
     override fun onStart() {
+        LocalStoreVW.nowFragment = "COLECTION"
         LocalStoreVW.getContent().observe(listAndTrackView.getLifecycleOwner(), Observer {
            t -> listAndTrackView.showRecyclerList(t)
        })
-        LocalStoreVW.getUserid().observe(listAndTrackView.getLifecycleOwner(), Observer {
-            listAndTrackView.welcome(it.name)
-        })
-
+        listAndTrackView.menuvisibility()
     }
 
-    override fun onExit() {
-        if(isNet(ProvidContext.getContext())){
-        listAndTrackView.getVM().exit()
-        listAndTrackView.gotoFragment("LOGIN")
-        }else{
-            listAndTrackView.actionMassege("Для выхода из аккаунта \n подключите интернет")
-        }
-    }
+
 
     override fun onGoTo(key: String) {
-        listAndTrackView.gotoFragment(key)
+        if (isLocationOn()) {
+            listAndTrackView.gotoFragment(key)
+        } else listAndTrackView.actionMassege("Включите GPS")
     }
 
     override fun remove(position: Int) {
@@ -49,13 +46,19 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
     }
 
     override fun creatPath(position: Int) {
-        LocalStoreVW.creatWay = true
-        if (LocalStoreVW.getContent().value!!.size == 1){
-            LocalStoreVW.workingItom = LocalStoreVW.getContent().value!![0]
-        }else{
-            LocalStoreVW.workingItom =  (LocalStoreVW.getContent().value as ArrayList)[position]
+        if (isLocationOn()) {
+            LocalStoreVW.creatWay = true
+            if (LocalStoreVW.getContent().value!!.size == 1){
+                LocalStoreVW.workingItom = LocalStoreVW.getContent().value!![0]
+            }else{
+                LocalStoreVW.workingItom =  (LocalStoreVW.getContent().value as ArrayList)[position]
+            }
+            listAndTrackView.rout("MAP")
+        }else {
+            listAndTrackView.showRecyclerList(LocalStoreVW.getContent().value!!)
+            listAndTrackView.actionMassege("Включите GPS")
+
         }
-        listAndTrackView.rout("MAP")
     }
 
     override fun nowUpdat(item: Content) {
@@ -65,6 +68,7 @@ class ListAndTrackPresent @Inject constructor(var listAndTrackView: ListAndTrack
     override fun onReestablishItom() {
         listAndTrackView.getVM().reestablishItom()
     }
+
 }
 
 

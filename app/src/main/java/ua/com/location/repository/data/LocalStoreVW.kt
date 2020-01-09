@@ -31,8 +31,14 @@ class LocalStoreVW : ViewModel() {
         @Volatile
         var creatWay: Boolean = false
 
+
+
+
         @Volatile
          var   lastremovedItom : Pair<Int,Content?> = 0 to null
+
+        @Volatile
+        var nowFragment: String = "LOGIN"
 
 
 

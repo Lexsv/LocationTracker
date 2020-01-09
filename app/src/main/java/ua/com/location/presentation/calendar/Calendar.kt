@@ -94,7 +94,6 @@ class Calendar: BaseFragment(),ICalendarView {
         timelineRowsList.add(myRow)
         timelineRowsList.add(myRow)
         timelineRowsList.add(myRow)
-        timelineRowsList.add(myRow)
 
 
 // Create the Timeline Adapter
